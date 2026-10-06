@@ -29,6 +29,7 @@ references/
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
   remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
+  resource-discipline.md                     One task at a time; release the GPU; no wasted runtime
   visual-reconstruction.md                   Objective, image-generation quality stage, models
   visual-understanding-and-segmentation.md   Understanding, editability, SAM 2.1, BiRefNet
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
@@ -58,6 +59,10 @@ Priority order throughout: **Quality > Fidelity > Editability > Speed**.
 model — instead of defaulting to one all-rounder — and verifies quality, hardware fit and
 licence before locking it in. `references/model-discovery.md` is the protocol;
 `references/model-selection.md` is the current cached answer.
+
+**Never waste remote runtime.** Work **one task at a time**, and release the GPU (unload the
+model, stop the session) as soon as each task's outputs are back on local. The local machine
+only saves files, runs the controller scripts and collects outputs — no local heavy work.
 
 ## Using it
 

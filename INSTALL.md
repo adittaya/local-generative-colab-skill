@@ -13,6 +13,7 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
    - model-discovery.md
    - architecture-and-cli.md
    - remote-compute.md
+   - resource-discipline.md
    - visual-reconstruction.md
    - visual-understanding-and-segmentation.md
    - asset-extraction-and-generation.md
@@ -33,6 +34,11 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
 4. Do not merely explain the workflow, do not give a tutorial, do not tell the user to do
    anything by hand, and do not stop after generating scripts. Execute.
 5. Priority order throughout: Quality > Fidelity > Editability > Speed.
+6. Never waste the remote GPU: run ONE task at a time, and after each task's outputs are
+   pulled back to local, unload the model, free the GPU, and stop the session if nothing
+   else needs it. There is no working time limit - prioritise quality - but never leave a
+   session idle or a second heavy model resident. The local machine only saves files, runs
+   the controller scripts and collects outputs.
 
 The skill covers six branches: visual reconstruction; editable asset extraction (SAM 2.1
 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation

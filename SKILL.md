@@ -68,9 +68,15 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   on a remote session. See `references/remote-compute.md`.
 - **Pick the backend per task.** Colab (1× T4, interactive) or Kaggle (2× T4, ~32 GB, 12 h
   sessions, 30 h/week). Use Kaggle for heavier/longer jobs, Colab for interactive iteration.
+- **Never waste remote runtime.** All heavy work runs remotely; the local machine only
+  **saves files, runs the controller scripts and collects outputs**. Run **one task at a
+  time**: after each task, unload the model, free the GPU, and **stop the session** if
+  nothing else needs it. There is no working time limit — never trade quality for speed —
+  but never leave a session idle or a second heavy model resident. See
+  `references/resource-discipline.md`.
 - **Controller only.** The local machine never runs heavy inference (no image/3D
   generation, no large-model segmentation, no audio generation, no heavy reconstruction).
-  All heavy computation happens on Colab.
+  All heavy computation happens on the remote backend (Colab or Kaggle).
 - **No manual steps for the user.** Never ask the user to open a notebook, authenticate
   Google, upload files, copy/paste code, run Python, or install heavy dependencies in
   Colab. Google Colab is already authenticated through the CLI.
@@ -127,6 +133,8 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
 - `references/remote-compute.md` — the two remote backends (**Google Colab** and **Kaggle**):
   specs and free-tier limits, hybrid selection by use case, the `kaggle` CLI workflow, and
   the **ephemeral-storage rule** (local home = source of truth).
+- `references/resource-discipline.md` — runtime discipline: one task at a time, the local
+  machine's save/drive/collect-only role, and how and when to release the remote GPU.
 - `references/visual-reconstruction.md` — core project objective, image generation as the
   primary quality stage, preferred model families, reconstruction principles, output metadata.
 - `references/visual-understanding-and-segmentation.md` — visual understanding, maximum
