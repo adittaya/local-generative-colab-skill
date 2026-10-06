@@ -66,14 +66,16 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   Kaggle) as ephemeral. Stage inputs out, do all heavy work remotely, and pull outputs and
   checkpoints back to the local machine immediately. Never leave the only copy of a result
   on a remote session. See `references/remote-compute.md`.
-- **Pick the backend per task.** Colab (1× T4, interactive) or Kaggle (2× T4, ~32 GB, 12 h
-  sessions, 30 h/week). Use Kaggle for heavier/longer jobs, Colab for interactive iteration.
+- **Pick the backend per task — and run both in parallel.** Colab (1× T4, interactive) or
+  Kaggle (2× T4, ~32 GB, 12 h sessions, 30 h/week). Use Kaggle for heavier/longer jobs,
+  Colab for interactive iteration, and **split independent tasks across both, running them
+  concurrently in the background** to finish faster.
 - **Do everything remotely — heavy to light.** The remote backend runs model inference *and*
   the light tasks (downloading, packaging, editing, assembling, file operations) because it
-  is faster there. Never waste remote runtime: run **one task at a time**, and after each
-  task unload the model, free the GPU, and **stop the session** if nothing else needs it.
-  There is no working time limit — never trade quality for speed — but never leave a session
-  idle or a second heavy model resident. See `references/resource-discipline.md`.
+  is faster there. Never waste remote runtime: keep **one task per machine** at a time, and
+  after each task unload the model, free the GPU, and **stop the session** if nothing else
+  needs it. There is no working time limit — never trade quality for speed — but never leave
+  a session idle or a second heavy model resident. See `references/resource-discipline.md`.
 - **Controller only — the remote does the work.** The local machine never runs the work
   itself: no local inference, no local packaging, no local editing, no local downloads. It
   only saves files, runs the controller scripts and collects outputs. The remote backend

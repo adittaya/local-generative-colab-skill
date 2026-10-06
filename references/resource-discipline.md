@@ -11,6 +11,9 @@ work remotely, heavy *and* light. And because remote runtime is scarce and quota
 use it actively and **release it the moment a task is done**. Quality is not time-limited —
 idle runtime is waste.
 
+To finish sooner, **use both backends in parallel**: Colab and Kaggle are independent, so
+split the work across them and run jobs concurrently in the background (see below).
+
 ## What runs remotely — everything
 
 Run on the remote backend, from heavy to light:
@@ -34,14 +37,17 @@ If a task can run remotely, it **runs remotely**. It is faster there.
 Nothing else. **No local inference, no local packaging, no local editing, no local
 downloads.** The local machine is the controller and the store — not a worker.
 
-## One task at a time, one machine at a time
+## One task per machine — but run both machines in parallel
 
-- Work **sequentially**. Pick one task (e.g. image generation), run it, finish it, **release
-  the machine**, then move to the next (e.g. video generation).
-- Do **not** keep several heavy models resident at once, and do not interleave unrelated
-  heavy jobs.
-- After each task: **unload the model, free VRAM/RAM, clean temp**, then **stop the session**
-  if no further work needs it.
+- Keep **one task per machine at a time**: don't stack several heavy models on a single
+  backend, and don't interleave unrelated heavy jobs on the same machine.
+- **Run both backends in parallel, in the background.** Launch independent tasks on Colab and
+  Kaggle simultaneously to finish sooner — e.g. image generation on one while video
+  generation runs on the other. This is encouraged: it uses the free capacity of both.
+- Within a machine, still work **sequentially**: pick a task, run it, finish it, **release
+  that machine**, then queue the next task on it.
+- After each task: **unload the model, free VRAM/RAM, clean temp**, then **stop that
+  session** if no further work needs it.
 
 ## Stop cleanly when the work is done
 
@@ -63,6 +69,8 @@ downloads.** The local machine is the controller and the store — not a worker.
 - [ ] Backend chosen; remote GPU verified.
 - [ ] **Only** the models needed for *this* task loaded.
 - [ ] All work — including downloads, packaging and assembling — done remotely.
+- [ ] Independent tasks split across **both** backends and run **in parallel** in the
+  background where it helps.
 - [ ] Outputs pulled back to the local machine as they are produced.
 - [ ] Checkpoints synced to local (or Drive / a Kaggle dataset).
 - [ ] Model unloaded and VRAM/RAM freed after the task.

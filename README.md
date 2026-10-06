@@ -60,9 +60,11 @@ model — instead of defaulting to one all-rounder — and verifies quality, har
 licence before locking it in. `references/model-discovery.md` is the protocol;
 `references/model-selection.md` is the current cached answer.
 
-**Never waste remote runtime.** Work **one task at a time**, and release the GPU (unload the
-model, stop the session) as soon as each task's outputs are back on local. The local machine
-only saves files, runs the controller scripts and collects outputs — no local work at all.
+**Never waste remote runtime.** Keep **one task per machine**, and release the GPU (unload the
+model, stop the session) as soon as each task's outputs are back on local. **Run Colab and
+Kaggle in parallel** — split independent tasks across both, in the background, to finish
+faster. The local machine only saves files, runs the controller scripts and collects outputs
+— no local work at all.
 
 ## Using it
 

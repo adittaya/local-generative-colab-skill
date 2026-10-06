@@ -46,6 +46,9 @@ both can be queued at busy times.
   are blockers.
 - **Split across both** when one backend is quota-limited: e.g. iterate on Colab, run the
   heavy batch on Kaggle.
+- **Run both in parallel.** Colab and Kaggle are independent, so split independent tasks
+  across them and run them **concurrently in the background** to finish faster — while
+  keeping one task per machine at a time (see `resource-discipline.md`).
 
 ## Kaggle CLI workflow
 
