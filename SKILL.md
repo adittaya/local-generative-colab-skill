@@ -77,6 +77,13 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   Kaggle) as ephemeral. Stage inputs out, do all heavy work remotely, and pull outputs and
   checkpoints back to the local machine immediately. Never leave the only copy of a result
   on a remote session. See `references/remote-compute.md`.
+- **Never lose work — three tiers.** Local holds **light truth** (scripts, prompts, docs,
+  stills, audio, finished shots, manifests); Kaggle holds **heavy truth** (weights and bulky
+  intermediates, versioned as Kaggle Models / datasets); **sessions hold nothing**. Pull each
+  completed unit to local **immediately** — never batch at the end. Run remote jobs under
+  `nohup` with a log, write incremental outputs with a `.done` marker per unit, and poll them;
+  log every generation's params + seed to `MANIFEST.json` so any lost output is reproducible
+  bit-for-bit. See `references/persistence-protocol.md`.
 - **Run many sessions in parallel — mandatory for speed.** Each Colab/Kaggle session is its
   own VM with its own GPU/RAM/CPU, so run **multiple sessions across both backends at once**,
   **one task per session**, fanning independent work out across them. Use Kaggle for
@@ -158,6 +165,9 @@ specific and decision-oriented.
 - `references/remote-compute.md` — the two remote backends (**Google Colab** and **Kaggle**):
   specs and free-tier limits, hybrid selection by use case, the `kaggle` CLI workflow, and
   the **ephemeral-storage rule** (local home = source of truth).
+- `references/persistence-protocol.md` — the three-tier persistence system: local light
+  truth, Kaggle heavy truth, sessions nothing; `nohup` + `.done` markers + polling;
+  determinism and `MANIFEST.json`.
 - `references/resource-discipline.md` — runtime discipline: all work remotely (heavy to
   light), the local machine's save/drive/collect-only role, multi-session horizontal
   scaling, and how and when to release each remote VM.

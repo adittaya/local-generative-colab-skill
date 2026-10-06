@@ -29,6 +29,7 @@ references/
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
   remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
+  persistence-protocol.md                    3 tiers (local light truth / Kaggle heavy truth / sessions nothing)
   resource-discipline.md                     One task per session; multi-session scaling; no wasted runtime
   quota-and-accounts.md                      Monitor account limits; escalate account switches to the user
   example-project-summary.md                 Worked example of the end-of-project summary format

@@ -103,6 +103,10 @@ guaranteed to survive, and neither backend is a reliable store.
 - Keep a **manifest** of what was staged and what was returned, so the local tree stays the
   authoritative record.
 
+For the full system — three tiers (local light truth, Kaggle heavy truth, sessions nothing),
+`nohup` + `.done` markers + polling, determinism and `MANIFEST.json` — see
+`persistence-protocol.md`.
+
 ## Guardrails
 
 - **Verify the GPU** (`nvidia-smi`, CUDA, PyTorch) on whichever backend you use, before any

@@ -17,6 +17,7 @@ quota. Never compromise on quality, but never waste compute.
    - model-discovery.md
    - architecture-and-cli.md
    - remote-compute.md
+   - persistence-protocol.md
    - resource-discipline.md
    - quota-and-accounts.md
    - example-project-summary.md
