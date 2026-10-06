@@ -98,7 +98,9 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 7. Optional video generation & regeneration with **LTX-2.5** — animate reconstructed
    stills, generate missing motion, and regenerate/edit existing footage (Retake,
    in/outpainting, IC-LoRA transforms, upscale/restore).
-8. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
+8. Audio reconstruction & generation — music with **ACE-Step 1.5**, SFX/ambience with
+   **Stable Audio Open 1.5**, or synchronised AV audio via **LTX-2.5**.
+9. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
 
 ## References
 
@@ -114,5 +116,7 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 - `references/video-generation.md` — LTX-2.5 video generation **and regeneration**: modes,
   pipelines, IC-LoRA editing, VFX passes (restore, in/outpaint, SDR→HDR, AlphaGen),
   quantisation and VRAM guidance, and the ComfyUI workflow map.
+- `references/audio.md` — audio branch: music with ACE-Step 1.5, SFX/ambience with Stable
+  Audio Open 1.5, synchronised AV audio, and the analyse→decide→generate→mix pipeline.
 - `references/model-selection.md` — use case → expert model map: the best specialist model
   for each job across video, image, segmentation, 3D and audio.

@@ -29,6 +29,7 @@ references/
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
   3d-generation.md                           Hunyuan3D 2.1 3D asset generation
   video-generation.md                        LTX-2.5 video generation & regeneration
+  audio.md                                   Audio: ACE-Step 1.5, Stable Audio Open 1.5
   model-selection.md                         Use case → expert model map (video, image, 3D, audio)
 docs/
   generation-times.html                      Local video generation-time chart (model × GPU)
@@ -59,8 +60,8 @@ runtime, not read as a tutorial.
 
 ## Note on source material
 
-The instructions were assembled from a master production brief. The brief was truncated
-after section 28 (the 3D-generation branch); the detailed audio-pipeline sections referenced
-in the architecture diagram were not present in the source and are not included here. Those
-sections can be appended to `references/3d-generation.md` (or a new `references/audio.md`)
-once available.
+The core instructions were assembled from a master production brief. The brief was truncated
+after section 28 (the 3D-generation branch) and did not include the detailed audio-pipeline
+sections referenced in its architecture diagram. Those gaps have since been filled from
+public sources: `references/3d-generation.md` now carries the full Hunyuan3D 2.1 module, and
+`references/audio.md` covers the audio branch (ACE-Step 1.5, Stable Audio Open 1.5).
