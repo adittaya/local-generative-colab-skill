@@ -68,6 +68,9 @@ finish faster. Quotas are per account, so if a backend runs out the agent **tell
 switch accounts. The local machine only saves files, runs the controller scripts and collects
 outputs — no local work at all.
 
+**Mandatory — switch each session off when its work is done.** Free is not unlimited: an idle
+session wastes runtime and quota. Be efficient, but never compromise on quality.
+
 ## Using it
 
 Point your agent at `SKILL.md` and follow the workflow, pulling detail from `references/` as

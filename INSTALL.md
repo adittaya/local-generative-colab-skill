@@ -7,6 +7,10 @@ Install and run the "local-generative-colab-skill".
 
 Repository: https://github.com/adittaya/local-generative-colab-skill
 
+MANDATORY FIRST: read the "Mandatory disclaimer" in SKILL.md. Switch each remote session OFF
+as soon as its work is done - free is not unlimited, and idle sessions waste runtime and
+quota. Never compromise on quality, but never waste compute.
+
 1. Read SKILL.md at the repository root. It defines your role, the non-negotiable rules,
    the pipeline stages and the reference index.
 2. Load the reference files from references/ as each stage needs them:

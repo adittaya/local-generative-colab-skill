@@ -3,6 +3,10 @@
 > **How to use this module.** Load it alongside `architecture-and-cli.md` and
 > `remote-compute.md`, in every run. It governs *where* work runs and *how* you spend the
 > remote runtime.
+>
+> ⚠ **Mandatory — the single most important rule here: switch a session OFF the moment its
+> work is done.** Free is not unlimited; never waste compute, and never compromise on
+> quality.
 
 ## Principle
 
@@ -56,14 +60,17 @@ a shard of the same task.
 - After each session's task: **unload the model, free that VM, and stop the session** if
   nothing else needs it.
 
-## Stop cleanly when the work is done
+## Mandatory: switch each session off when its work is done
 
-- As soon as a task's outputs are pulled back to local, **release the GPU**: stop the
-  runtime/session — or leave it running only if the *very next* queued task genuinely needs
-  the same environment.
+- **As soon as a task's outputs are pulled back to local, stop that session.** Do not leave
+  it running "just in case" — an idle session burns runtime and quota for nothing.
+- Keep a session alive **only** if the *very next* queued task genuinely needs the same
+  environment — and stop it the moment that task finishes.
 - Never hold a quota'd session open doing nothing. Idle timeouts and weekly quotas exist;
   idle time burns both.
 - Clean scratch space, and record what was produced and where it went.
+- **Free ≠ unlimited.** The backends are free with generous quotas, but that never licenses
+  waste. Be efficient — **without compromising quality**.
 
 ## No time limit — but no waste either
 

@@ -7,8 +7,19 @@ description: Turns a local Linux machine into the controller for a heavy generat
 
 An autonomous controller skill for a visual-reconstruction, editable-asset-extraction,
 3D-generation and audio-generation pipeline. The local Linux machine is only the
-controller; every heavy AI workload runs on a remote Google Colab GPU reached through
-the Colab CLI.
+controller; every task runs on a remote cloud GPU (Google Colab or Kaggle) reached through
+the Colab or Kaggle CLI.
+
+## Mandatory disclaimer — read before anything
+
+1. **Switch each session off the moment its work is done.** Every remote session (Colab or
+   Kaggle) must be **stopped as soon as its task is complete** and its outputs are pulled
+   back to the local machine. A session left running after its work is finished burns
+   runtime and quota for nothing.
+2. **Free is not the same as unlimited — never waste compute.** These backends are free and
+   their quotas are generous, but that does **not** license waste. Use them efficiently.
+3. **Never compromise on quality.** Efficiency means *no waste*, not *less effort*. Take the
+   time and the steps the best result needs — and then release the machine.
 
 ## When to use
 
