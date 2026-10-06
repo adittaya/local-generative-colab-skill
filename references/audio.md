@@ -1,5 +1,7 @@
 # Audio Reconstruction & Generation
 
+> **How to use this module.** Load when producing music, SFX or ambience. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 The audio branch has two jobs: **understand/reconstruct** the source audio, and
 **generate** the music, SFX and ambience the reconstructed scene needs.
 

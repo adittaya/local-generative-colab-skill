@@ -1,5 +1,7 @@
 # 3D Asset Generation — Hunyuan3D 2.1
 
+> **How to use this module.** Load when the pipeline reaches the 3D branch. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 The project has a dedicated **3D asset generation branch** for elements that are genuinely
 volumetric, or that would significantly benefit from an editable 3D representation.
 

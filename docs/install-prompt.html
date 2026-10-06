@@ -72,6 +72,7 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
 
 1. Read SKILL.md at the repository root. It defines your role, the non-negotiable rules, the pipeline stages and the reference index.
 2. Load the reference files from references/ as each stage needs them:
+   - model-discovery.md
    - architecture-and-cli.md
    - visual-reconstruction.md
    - visual-understanding-and-segmentation.md
@@ -86,6 +87,8 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
 5. Priority order throughout: Quality &gt; Fidelity &gt; Editability &gt; Speed.
 
 The skill covers six branches: visual reconstruction; editable asset extraction (SAM 2.1 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation (ACE-Step 1.5, Stable Audio Open 1.5); voice generation &amp; word-level transcription (Qwen3-TTS, Qwen3-ASR + Qwen3-ForcedAligner); and video generation &amp; regeneration (LTX-2.5). Use references/model-selection.md to choose the right expert model for each task, and docs/generation-times.html for local video render-time expectations.
+
+For every task, research and select the current best specialist model rather than defaulting to one all-rounder (see references/model-discovery.md). Never assume the models named in the skill are still the best.
 
 Begin by reading SKILL.md, then present the plan as todos and start executing.</pre>
   </div>

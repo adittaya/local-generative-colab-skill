@@ -1,5 +1,7 @@
 # Video Generation & Regeneration
 
+> **How to use this module.** Load when generating or regenerating motion. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 This module adds the **time dimension** to the pipeline: turning reconstructed stills into
 motion, and generating or regenerating existing footage. The primary model is
 **LTX-2.5** (Lightricks) — the latest LTX open-weights audio-video "world" model.

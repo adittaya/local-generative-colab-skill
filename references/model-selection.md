@@ -1,5 +1,7 @@
 # Model Selection — Use Case → Expert Model
 
+> **How to use this module.** Use to pick the best specialist model per task. This is a **snapshot** — refresh it with `model-discovery.md`.
+
 One all-rounder is rarely optimal. This map pairs each concrete task with the specialist
 model that does it best, so the pipeline can swap in the right tool per job instead of
 forcing one model to do everything.

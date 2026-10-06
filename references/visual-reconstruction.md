@@ -1,5 +1,7 @@
 ## 7. CORE PROJECT OBJECTIVE
 
+> **How to use this module.** Load when reconstructing source frames. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 This is NOT a conventional image-upscaling project.
 
 Do NOT treat the source as:

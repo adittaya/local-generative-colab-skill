@@ -1,5 +1,7 @@
 ## 20. COMPLEX VISUAL ASSET CLASSIFICATION
 
+> **How to use this module.** Load when deciding extract-vs-generate for each element. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 Classify an element as:
 
 COMPLEX_GENERATIVE_ASSET

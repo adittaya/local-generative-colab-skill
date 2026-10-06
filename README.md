@@ -25,6 +25,7 @@ It covers five coupled branches:
 SKILL.md                                     Skill entry point (frontmatter + workflow)
 README.md                                    This file
 references/
+  model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
   visual-reconstruction.md                   Objective, image-generation quality stage, models
   visual-understanding-and-segmentation.md   Understanding, editability, SAM 2.1, BiRefNet
@@ -48,6 +49,11 @@ actual syntax, verifies the remote GPU, and builds / executes / monitors / debug
 packages / returns the whole project without asking the user to do anything by hand.
 
 Priority order throughout: **Quality > Fidelity > Editability > Speed**.
+
+**No fixed model set.** For every task the agent researches the current best specialist
+model — instead of defaulting to one all-rounder — and verifies quality, hardware fit and
+licence before locking it in. `references/model-discovery.md` is the protocol;
+`references/model-selection.md` is the current cached answer.
 
 ## Using it
 

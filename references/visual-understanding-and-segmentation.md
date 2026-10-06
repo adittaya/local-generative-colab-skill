@@ -1,5 +1,7 @@
 ## 13. VISUAL UNDERSTANDING
 
+> **How to use this module.** Load when decomposing a reconstructed frame into editable assets. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 Analyze every reconstructed frame.
 
 Identify visual components such as:

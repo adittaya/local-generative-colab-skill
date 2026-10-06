@@ -1,5 +1,7 @@
 # Voice — Generation & Word-Level Transcription
 
+> **How to use this module.** Load when synthesising speech, cloning a voice, or transcribing audio. Before locking a model, refresh the pick via `references/model-discovery.md`.
+
 Two jobs live here:
 
 1. **Voice generation (TTS)** — synthesise speech and clone voices.
