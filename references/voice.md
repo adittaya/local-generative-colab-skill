@@ -90,6 +90,34 @@ On a Colab T4 (~15 GB VRAM), Qwen3-TTS 1.7B (~6 GB) and Qwen3-ASR 1.7B both fit 
 **sequentially** with the other heavy stages, never concurrently. The 0.6B variants are the
 safe defaults when VRAM is tight.
 
+## 6. Voice cloning — local model comparison
+
+Accurate local voice cloning is available today. Quality is judged by **speaker similarity**
+(SIM / SECS) and **intelligibility** (WER / CER); models differ in reference-clip length,
+VRAM and licence.
+
+| Model | Reference clip | Strength | VRAM | Licence |
+|---|---|---|---|---|
+| **Qwen3-TTS** (1.7B) | ~3 s | SOTA open clone stability; 10 languages | ~6 GB | Apache 2.0 |
+| **Fish Speech V1.5 / S2 Pro** | 10–30 s | Leading multilingual cloning; 80+ languages | 12 GB+ | Apache 2.0 |
+| **IndexTTS-2** | zero-shot | Precise duration control + emotion/timbre disentanglement — best for dubbing | moderate | Apache 2.0 |
+| **Chatterbox** (350M) | ~5 s | Won ~65% of blind tests vs ElevenLabs | 4 GB+ | MIT |
+| **VoxCPM2** (2B) | few s | "Ultimate Cloning" (reference audio + transcript) reproduces every nuance | ~8 GB | Apache 2.0 |
+| **CosyVoice2** (0.5B) | few s | Best bilingual similarity; 25 Hz frame rate; real-time | ~6 GB | Apache 2.0 |
+| **F5-TTS** | ~3 s | Strong flow-matching clone; base for many fine-tunes | moderate | MIT |
+| **OpenVoice V2** | few s | Tone-colour clone + style/accent control | low | MIT |
+| **IndicF5** (AI4Bharat) | 5–12 s | 11 Indic languages (Hindi, Tamil, Telugu…) in one pass | — | AI4Bharat |
+| ~~XTTS-v2~~ | 3–6 s | Widely used, but **non-commercial** — Coqui Public Model Licence | 6 GB+ | CPML |
+
+Notes:
+
+- The numbers come from different benchmarks and are **not directly comparable** — read
+  SIM/WER as direction, not a ranking.
+- **Clean, single-speaker reference audio** (no music or noise) matters more than the model
+  choice for final clone quality. 5–15 s of clean speech is plenty for most models.
+- For **Indian languages**, IndicF5 is a strong fully-local option; pair it with
+  Qwen3-ASR / Whisper for reference-audio auto-transcription.
+
 ## Sources
 
 Qwen3-TTS (Alibaba Cloud community post, Hugging Face), Qwen3-ASR technical report

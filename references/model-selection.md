@@ -92,6 +92,8 @@ The **Evidence** column is honest about how well-supported each pick is:
 | Use case | Expert model | Why it wins | Evidence |
 |---|---|---|---|
 | Voice generation / cloning (TTS) | **Qwen3-TTS** (1.7B) | SOTA open TTS; 3-second clone; natural-language voice control; Apache 2.0 | High |
+| Accurate local voice cloning | **Qwen3-TTS** / **IndexTTS-2** | 3-second clone, SOTA stability; IndexTTS-2 adds precise duration control | High |
+| Indic-language voice cloning | **IndicF5** | 11 Indic languages, fully local, one pass | Medium |
 | Lightweight voice cloning | **Chatterbox** (350M) | MIT; best clone quality per size; 23+ languages; paralinguistic tags | Medium |
 | Multilingual cloning + voice design | **VoxCPM2** (2B) | 30 languages, 48 kHz, controllable cloning; Apache 2.0 | Medium |
 | Word-level transcription (ASR) | **Qwen3-ASR + Qwen3-ForcedAligner** | 52 languages; dedicated word-level forced alignment; Apache 2.0 | High |
