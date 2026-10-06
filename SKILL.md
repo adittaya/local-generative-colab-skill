@@ -83,7 +83,8 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   completed unit to local **immediately** — never batch at the end. Run remote jobs under
   `nohup` with a log, write incremental outputs with a `.done` marker per unit, and poll them;
   log every generation's params + seed to `MANIFEST.json` so any lost output is reproducible
-  bit-for-bit. See `references/persistence-protocol.md`.
+  bit-for-bit. Keep the local home (≈ 5 GB) at **≥ 500 MB free** — route anything larger
+  through Tier 2. See `references/persistence-protocol.md`.
 - **Run many sessions in parallel — mandatory for speed.** Each Colab/Kaggle session is its
   own VM with its own GPU/RAM/CPU, so run **multiple sessions across both backends at once**,
   **one task per session**, fanning independent work out across them. Use Kaggle for

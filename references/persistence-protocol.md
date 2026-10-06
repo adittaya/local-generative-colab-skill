@@ -12,6 +12,9 @@
 Scripts, prompts, CONCEPT/ASSETS docs, stills, VO wavs, finished shots, manifests.
 
 - **Pulled from remote immediately, per completed unit — never batched at the end.**
+- **Disk budget: the local home directory is ≈ 5 GB. Always keep at least 500 MB free** —
+  never let staging fill the disk. Anything that would breach that (large weights, bulky
+  intermediates, big renders) goes to **Tier 2**, not to local.
 - This is the system of record: if every remote tier dies, Tier 1 reconstructs the work.
 
 ## TIER 2 — Kaggle persistent storage (weights + bulky intermediates)
@@ -48,6 +51,7 @@ from the Tier 1 record.
 
 ## Checklist
 
+- [ ] Local home has **≥ 500 MB free** before staging (home is ≈ 5 GB).
 - [ ] Every remote job runs under `nohup` with a log file.
 - [ ] Incremental outputs with a `.done` marker per unit.
 - [ ] The poller pulls each `.done` unit to Tier 1 / Tier 2 at once.
