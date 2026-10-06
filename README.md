@@ -45,9 +45,9 @@ LICENSE                                      MIT
 
 ## Core idea
 
-The local Linux machine is **only the controller** and the **source of truth**. Every heavy
-AI workload — image generation, 3D generation, large-model segmentation, audio generation,
-reconstruction — runs on a **remote cloud GPU: Google Colab or Kaggle**, chosen per task.
+The local Linux machine is **only the controller** and the **source of truth**. Every task
+— heavy and light: model inference, downloads, packaging, editing, assembling — runs on a
+**remote cloud GPU: Google Colab or Kaggle**, chosen per task.
 Both remote filesystems are **ephemeral scratch**; outputs are pulled back to the local home
 directory. The controller inspects the installed CLI (`colab` or `kaggle`), adapts to its
 actual syntax, verifies the remote GPU, and builds / executes / monitors / debugs / resumes /
@@ -62,7 +62,7 @@ licence before locking it in. `references/model-discovery.md` is the protocol;
 
 **Never waste remote runtime.** Work **one task at a time**, and release the GPU (unload the
 model, stop the session) as soon as each task's outputs are back on local. The local machine
-only saves files, runs the controller scripts and collects outputs — no local heavy work.
+only saves files, runs the controller scripts and collects outputs — no local work at all.
 
 ## Using it
 

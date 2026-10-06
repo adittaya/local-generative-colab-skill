@@ -1,25 +1,38 @@
-# Resource Discipline — Do Not Waste Remote Runtime
+# Resource Discipline — Work Remotely, and Do Not Waste the Runtime
 
 > **How to use this module.** Load it alongside `architecture-and-cli.md` and
-> `remote-compute.md`, in every run. It governs *how* you spend the remote GPU time.
+> `remote-compute.md`, in every run. It governs *where* work runs and *how* you spend the
+> remote runtime.
 
 ## Principle
 
-Remote GPU time is scarce, quota-limited and shared. **Use it actively, and release it the
-moment a task is done.** Quality is *not* time-limited — but idle runtime *is* waste. Work
-deliberately and completely, then let the machine go.
+The remote machine is faster at **everything** — not only heavy inference. So do **all**
+work remotely, heavy *and* light. And because remote runtime is scarce and quota-limited,
+use it actively and **release it the moment a task is done**. Quality is not time-limited —
+idle runtime is waste.
+
+## What runs remotely — everything
+
+Run on the remote backend, from heavy to light:
+
+- **model inference** — image, 3D, video, audio, voice, segmentation;
+- **downloading** — models, weights, checkpoints, datasets, reference assets;
+- **packaging** — zipping, archiving, bundling the final asset library;
+- **editing and assembling** — compositing, muxing, format conversion, ffmpeg passes,
+  subtitle burn-in, audio mixing;
+- **file operations** — moving, renaming, hashing/checksums, manifest building, uploads.
+
+If a task can run remotely, it **runs remotely**. It is faster there.
 
 ## The local machine's job — and only its job
-
-**All heavy work runs remotely.** The local machine is used **only** for:
 
 - **saving files** — the home directory is the persistent source of truth;
 - **running the controller scripts** — the CLI drivers that stage inputs, launch remote jobs
   and fetch results;
 - **collecting and providing outputs** — pulling results back and handing them to the user.
 
-Nothing heavy runs locally: no local inference, no local training, no local model loading,
-no local reconstruction. That is the whole point of the remote backend.
+Nothing else. **No local inference, no local packaging, no local editing, no local
+downloads.** The local machine is the controller and the store — not a worker.
 
 ## One task at a time, one machine at a time
 
@@ -49,6 +62,7 @@ no local reconstruction. That is the whole point of the remote backend.
 
 - [ ] Backend chosen; remote GPU verified.
 - [ ] **Only** the models needed for *this* task loaded.
+- [ ] All work — including downloads, packaging and assembling — done remotely.
 - [ ] Outputs pulled back to the local machine as they are produced.
 - [ ] Checkpoints synced to local (or Drive / a Kaggle dataset).
 - [ ] Model unloaded and VRAM/RAM freed after the task.
@@ -59,7 +73,8 @@ no local reconstruction. That is the whole point of the remote backend.
 
 Both free tiers are quota-limited — Colab's is dynamic and can be cut, Kaggle's is 30 h/week
 and counted — and free accelerators can queue. Wasting runtime burns quota and blocks the
-next task, while holding idle sessions triggers timeouts and disconnects.
+next task, while holding idle sessions triggers timeouts and disconnects. Doing even the
+light tasks remotely also keeps the local machine free and the pipeline fast.
 
 ## Sources
 

@@ -23,9 +23,11 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
    - voice.md
    - model-selection.md
 3. Operate as the skill describes: you are the CONTROLLER on the user's local Linux
-   machine, and all heavy AI computation runs on a REMOTE cloud GPU - Google Colab (1x T4,
-   ~16 GB) or Kaggle (2x T4, ~32 GB) - through the Colab CLI or the Kaggle CLI. Choose the
-   backend per task (Kaggle for heavier/longer jobs, Colab for interactive iteration).
+   machine, and ALL work runs on a REMOTE cloud GPU - Google Colab (1x T4,
+   ~16 GB) or Kaggle (2x T4, ~32 GB) - through the Colab CLI or the Kaggle CLI. Run
+   everything there, heavy and light (inference, downloads, packaging, editing, assembling);
+   the local machine only saves files, runs the controller scripts and collects outputs.
+   Choose the backend per task (Kaggle for heavier/longer jobs, Colab for interactive iteration).
    Inspect the installed CLI and adapt to its real syntax, verify the remote GPU, then
    actually build / execute / monitor / debug / resume / complete / package / return the
    whole project.
