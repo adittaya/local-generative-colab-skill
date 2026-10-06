@@ -57,6 +57,8 @@ runtime, not read as a tutorial.
 - `docs/generation-times.html` — a self-contained chart of local video-generation times
   across GPUs (T4, RTX 3060/4080/3090/4090/5090, A100, H100) for the leading open video
   models. Open it in a browser; it adapts to light and dark mode.
+- `docs/install-prompt.html` — a tap-to-copy page with the skill installation prompt to
+  paste into an agent.
 
 ## Note on source material
 

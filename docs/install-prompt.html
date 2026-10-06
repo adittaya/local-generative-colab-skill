@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install — local-generative-colab-skill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+    --font-mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
+    --bg:#f4f7f9; --surface:#ffffff; --surface2:#eef3f6;
+    --border:rgba(15,40,60,.10); --border-bright:rgba(15,40,60,.20);
+    --text:#0f2433; --text-dim:#5b7280; --accent:#0e7490; --teal:#0d9488;
+    --accent-dim:rgba(14,116,144,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b141a; --surface:#111e26; --surface2:#16262f;
+      --border:rgba(255,255,255,.08); --border-bright:rgba(255,255,255,.16);
+      --text:#e3eef3; --text-dim:#8ba3b0; --accent:#38bdf8; --teal:#2dd4bf;
+      --accent-dim:rgba(56,189,248,.12);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    background-image:radial-gradient(ellipse at 20% 0%, var(--accent-dim) 0%, transparent 45%);
+    color:var(--text); font-family:var(--font-body);
+    padding:48px 24px 64px; min-height:100vh;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:12px;}
+  h1{font-size:30px;font-weight:600;letter-spacing:-.4px;margin-bottom:8px;}
+  p.sub{color:var(--text-dim);font-size:14px;line-height:1.6;margin-bottom:26px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(15,40,60,.06);}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--surface2);border-bottom:1px solid var(--border);}
+  .bar .label{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);}
+  button{
+    font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.3px;
+    background:var(--accent);color:#fff;border:none;border-radius:8px;
+    padding:9px 16px;cursor:pointer;transition:transform .12s ease, filter .15s ease;
+  }
+  button:hover{filter:brightness(1.08);}
+  button:active{transform:scale(.97);}
+  button.copied{background:var(--teal);}
+  pre{
+    margin:0;padding:20px 18px;white-space:pre-wrap;word-break:break-word;
+    font-family:var(--font-mono);font-size:12.5px;line-height:1.65;color:var(--text);
+    max-height:60vh;overflow:auto;
+  }
+  .hint{margin-top:14px;font-size:12.5px;color:var(--text-dim);}
+  a{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Skill installation</p>
+  <h1>local-generative-colab-skill</h1>
+  <p class="sub">Tap the button to copy the installation prompt, then paste it into your agent. It points the agent at the repository and tells it how to load and run the skill.</p>
+
+  <div class="card">
+    <div class="bar">
+      <span class="label">Installation prompt</span>
+      <button id="copyBtn" onclick="copyPrompt()">Tap to copy</button>
+    </div>
+<pre id="prompt">Install and run the "local-generative-colab-skill".
+
+Repository: https://github.com/adittaya/local-generative-colab-skill
+
+1. Read SKILL.md at the repository root. It defines your role, the non-negotiable rules, the pipeline stages and the reference index.
+2. Load the reference files from references/ as each stage needs them:
+   - architecture-and-cli.md
+   - visual-reconstruction.md
+   - visual-understanding-and-segmentation.md
+   - asset-extraction-and-generation.md
+   - 3d-generation.md
+   - video-generation.md
+   - audio.md
+   - model-selection.md
+3. Operate as the skill describes: you are the CONTROLLER on the user's local Linux machine, and all heavy AI computation runs on a REMOTE Google Colab GPU (NVIDIA T4, ~16 GB) through the Google Colab CLI. Inspect the installed Colab CLI and adapt to its real syntax, verify the remote GPU, then actually build / execute / monitor / debug / resume / complete / package / return the whole project.
+4. Do not merely explain the workflow, do not give a tutorial, do not tell the user to do anything by hand, and do not stop after generating scripts. Execute.
+5. Priority order throughout: Quality &gt; Fidelity &gt; Editability &gt; Speed.
+
+The skill covers five branches: visual reconstruction; editable asset extraction (SAM 2.1 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation (ACE-Step 1.5, Stable Audio Open 1.5); and video generation &amp; regeneration (LTX-2.5). Use references/model-selection.md to choose the right expert model for each task, and docs/generation-times.html for local video render-time expectations.
+
+Begin by reading SKILL.md, then present the plan as todos and start executing.</pre>
+  </div>
+
+  <p class="hint">Repo: <a href="https://github.com/adittaya/local-generative-colab-skill">github.com/adittaya/local-generative-colab-skill</a></p>
+</div>
+
+<script>
+function copyPrompt(){
+  var txt = document.getElementById('prompt').innerText;
+  var btn = document.getElementById('copyBtn');
+  function done(){
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'Tap to copy'; btn.classList.remove('copied'); }, 1800);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt, done); });
+  } else { fallback(txt, done); }
+}
+function fallback(txt, done){
+  var ta = document.createElement('textarea');
+  ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e){}
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
