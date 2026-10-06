@@ -37,17 +37,24 @@ If a task can run remotely, it **runs remotely**. It is faster there.
 Nothing else. **No local inference, no local packaging, no local editing, no local
 downloads.** The local machine is the controller and the store — not a worker.
 
-## One task per machine — but run both machines in parallel
+## Parallel sessions — scale horizontally (mandatory for speed)
 
-- Keep **one task per machine at a time**: don't stack several heavy models on a single
-  backend, and don't interleave unrelated heavy jobs on the same machine.
-- **Run both backends in parallel, in the background.** Launch independent tasks on Colab and
-  Kaggle simultaneously to finish sooner — e.g. image generation on one while video
-  generation runs on the other. This is encouraged: it uses the free capacity of both.
-- Within a machine, still work **sequentially**: pick a task, run it, finish it, **release
-  that machine**, then queue the next task on it.
-- After each task: **unload the model, free VRAM/RAM, clean temp**, then **stop that
-  session** if no further work needs it.
+Each session — Colab or Kaggle — gets its **own VM with its own GPU, VRAM, RAM and CPU**.
+Sessions do **not** share memory. So to finish faster, run **multiple sessions in parallel**:
+several Colab sessions *and* several Kaggle sessions at once, each taking a different task or
+a shard of the same task.
+
+- **One task per session.** Each session is an independent worker — give it exactly one task.
+- **Fan out** independent work — per image, per frame, per asset, per model — across sessions.
+- **Files are local to a session** and vanish with it (`/content` on Colab; the scratchpad on
+  Kaggle). Pull results back to local (or Drive / `/kaggle/working`) as they are produced.
+- **Not dedicated hardware.** The provider may virtualise and share physical GPUs, so
+  per-session throughput varies.
+- **Quotas are per account, shared across your sessions.** More sessions do **not** mean
+  unlimited compute — they draw down the same allowance. Scale only as far as the account
+  allows, and watch the limits — see `quota-and-accounts.md`.
+- After each session's task: **unload the model, free that VM, and stop the session** if
+  nothing else needs it.
 
 ## Stop cleanly when the work is done
 
@@ -69,8 +76,10 @@ downloads.** The local machine is the controller and the store — not a worker.
 - [ ] Backend chosen; remote GPU verified.
 - [ ] **Only** the models needed for *this* task loaded.
 - [ ] All work — including downloads, packaging and assembling — done remotely.
-- [ ] Independent tasks split across **both** backends and run **in parallel** in the
-  background where it helps.
+- [ ] Independent work **fanned out across multiple parallel sessions** (several Colab and
+  several Kaggle sessions at once), one task per session.
+- [ ] Quotas/availability checked per account; **user told** if any backend is over limit
+  (see `quota-and-accounts.md`).
 - [ ] Outputs pulled back to the local machine as they are produced.
 - [ ] Checkpoints synced to local (or Drive / a Kaggle dataset).
 - [ ] Model unloaded and VRAM/RAM freed after the task.

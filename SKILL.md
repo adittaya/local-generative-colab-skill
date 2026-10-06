@@ -66,10 +66,14 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   Kaggle) as ephemeral. Stage inputs out, do all heavy work remotely, and pull outputs and
   checkpoints back to the local machine immediately. Never leave the only copy of a result
   on a remote session. See `references/remote-compute.md`.
-- **Pick the backend per task — and run both in parallel.** Colab (1× T4, interactive) or
-  Kaggle (2× T4, ~32 GB, 12 h sessions, 30 h/week). Use Kaggle for heavier/longer jobs,
-  Colab for interactive iteration, and **split independent tasks across both, running them
-  concurrently in the background** to finish faster.
+- **Run many sessions in parallel — mandatory for speed.** Each Colab/Kaggle session is its
+  own VM with its own GPU/RAM/CPU, so run **multiple sessions across both backends at once**,
+  **one task per session**, fanning independent work out across them. Use Kaggle for
+  heavier/longer jobs (2× T4, ~32 GB) and Colab for interactive iteration.
+- **Watch the quotas; escalate account switches to the user.** Quotas are per account and
+  shared across your sessions. If a backend runs out — Kaggle quota exhausted, Colab not
+  granting a GPU, repeated disconnects — **stop retrying and tell the user** so they can
+  switch accounts, then continue on the other backend. See `references/quota-and-accounts.md`.
 - **Do everything remotely — heavy to light.** The remote backend runs model inference *and*
   the light tasks (downloading, packaging, editing, assembling, file operations) because it
   is faster there. Never waste remote runtime: keep **one task per machine** at a time, and
@@ -136,8 +140,11 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
 - `references/remote-compute.md` — the two remote backends (**Google Colab** and **Kaggle**):
   specs and free-tier limits, hybrid selection by use case, the `kaggle` CLI workflow, and
   the **ephemeral-storage rule** (local home = source of truth).
-- `references/resource-discipline.md` — runtime discipline: one task at a time, the local
-  machine's save/drive/collect-only role, and how and when to release the remote GPU.
+- `references/resource-discipline.md` — runtime discipline: all work remotely (heavy to
+  light), the local machine's save/drive/collect-only role, multi-session horizontal
+  scaling, and how and when to release each remote VM.
+- `references/quota-and-accounts.md` — **mandatory** quota monitoring: detecting account
+  limits, the escalation protocol to tell the user, and account rotation.
 - `references/visual-reconstruction.md` — core project objective, image generation as the
   primary quality stage, preferred model families, reconstruction principles, output metadata.
 - `references/visual-understanding-and-segmentation.md` — visual understanding, maximum

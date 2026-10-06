@@ -14,6 +14,7 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
    - architecture-and-cli.md
    - remote-compute.md
    - resource-discipline.md
+   - quota-and-accounts.md
    - visual-reconstruction.md
    - visual-understanding-and-segmentation.md
    - asset-extraction-and-generation.md
@@ -36,12 +37,15 @@ Repository: https://github.com/adittaya/local-generative-colab-skill
 4. Do not merely explain the workflow, do not give a tutorial, do not tell the user to do
    anything by hand, and do not stop after generating scripts. Execute.
 5. Priority order throughout: Quality > Fidelity > Editability > Speed.
-6. Never waste the remote GPU: keep ONE task per machine, and after each task's outputs are
-   pulled back to local, unload the model, free the GPU, and stop the session if nothing
-   else needs it. Run Colab and Kaggle IN PARALLEL in the background - split independent
-   tasks across both to finish faster. There is no working time limit - prioritise quality -
-   but never leave a session idle or a second heavy model resident. The local machine only
-   saves files, runs the controller scripts and collects outputs.
+6. Never waste the remote GPU: keep ONE task per session, and after each task's outputs are
+   pulled back to local, unload the model, free the VM, and stop the session if nothing else
+   needs it. SCALE HORIZONTALLY - run many sessions across both Colab and Kaggle at once (each
+   session is its own VM with its own GPU/RAM), one task per session, to finish faster. There
+   is no working time limit - prioritise quality - but never leave a session idle.
+7. Quotas are PER ACCOUNT and shared across sessions. Monitor them, and if any backend goes
+   over its limit (Kaggle quota exhausted, Colab not granting a GPU, repeated disconnects),
+   stop retrying and TELL ME so I can switch accounts - then continue on the other backend.
+   The local machine only saves files, runs the controller scripts and collects outputs.
 
 The skill covers six branches: visual reconstruction; editable asset extraction (SAM 2.1
 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation

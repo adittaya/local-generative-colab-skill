@@ -29,7 +29,8 @@ references/
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
   remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
-  resource-discipline.md                     One task at a time; release the GPU; no wasted runtime
+  resource-discipline.md                     One task per session; multi-session scaling; no wasted runtime
+  quota-and-accounts.md                      Monitor account limits; escalate account switches to the user
   visual-reconstruction.md                   Objective, image-generation quality stage, models
   visual-understanding-and-segmentation.md   Understanding, editability, SAM 2.1, BiRefNet
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
@@ -60,11 +61,12 @@ model — instead of defaulting to one all-rounder — and verifies quality, har
 licence before locking it in. `references/model-discovery.md` is the protocol;
 `references/model-selection.md` is the current cached answer.
 
-**Never waste remote runtime.** Keep **one task per machine**, and release the GPU (unload the
-model, stop the session) as soon as each task's outputs are back on local. **Run Colab and
-Kaggle in parallel** — split independent tasks across both, in the background, to finish
-faster. The local machine only saves files, runs the controller scripts and collects outputs
-— no local work at all.
+**Never waste remote runtime.** Keep **one task per session**, and release each VM (unload the
+model, stop the session) as soon as its task's outputs are back on local. **Scale
+horizontally** — run many sessions across both Colab and Kaggle at once, one task each, to
+finish faster. Quotas are per account, so if a backend runs out the agent **tells you** to
+switch accounts. The local machine only saves files, runs the controller scripts and collects
+outputs — no local work at all.
 
 ## Using it
 
