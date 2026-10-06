@@ -3,7 +3,7 @@
 A skill that drives a heavy **generative-media pipeline** from a local Linux machine while
 all computation runs on a **remote Google Colab GPU** (NVIDIA T4, ~16 GB) via the Colab CLI.
 
-It covers four coupled branches:
+It covers five coupled branches:
 
 - **Visual reconstruction** — reconstruct high-quality imagery from source frames using a
   top-tier generative model, conditioned on the source (not a plain pixel upscaler).
@@ -12,6 +12,10 @@ It covers four coupled branches:
 - **3D asset generation** — turn genuinely volumetric elements into editable 3D assets with
   Hunyuan3D 2.1.
 - **Audio reconstruction / generation** — music, SFX and ambience for the reconstructed scene.
+- **Video generation & regeneration** — generate or regenerate motion with **LTX-2.5**
+  (Lightricks' open-weights audio-video world model): T2V/I2V/A2V, native multishot and
+  synchronised audio, plus Retake, extend, inpainting/outpainting, IC-LoRA transforms,
+  upscale/restore and SDR→HDR.
 
 ## Layout
 
@@ -24,6 +28,7 @@ references/
   visual-understanding-and-segmentation.md   Understanding, editability, SAM 2.1, BiRefNet
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
   3d-generation.md                           Hunyuan3D 2.1 3D asset generation
+  video-generation.md                        LTX-2.5 video generation & regeneration
 ```
 
 ## Core idea

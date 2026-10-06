@@ -95,7 +95,10 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 5. Extraction-vs-generation decision per element; generate anything non-extractable using
    the source as reference.
 6. Optional 3D asset generation with **Hunyuan3D 2.1** for genuinely volumetric elements.
-7. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
+7. Optional video generation & regeneration with **LTX-2.5** — animate reconstructed
+   stills, generate missing motion, and regenerate/edit existing footage (Retake,
+   in/outpainting, IC-LoRA transforms, upscale/restore).
+8. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
 
 ## References
 
@@ -108,3 +111,6 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 - `references/asset-extraction-and-generation.md` — complex-asset classification, extraction
   vs generation, generated transparent assets, high-priority text handling, logos.
 - `references/3d-generation.md` — Hunyuan3D 2.1 3D asset generation.
+- `references/video-generation.md` — LTX-2.5 video generation **and regeneration**: modes,
+  pipelines, IC-LoRA editing, VFX passes (restore, in/outpaint, SDR→HDR, AlphaGen),
+  quantisation and VRAM guidance, and the ComfyUI workflow map.
