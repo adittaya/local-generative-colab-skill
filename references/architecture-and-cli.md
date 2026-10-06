@@ -1,6 +1,8 @@
 ## 1. FUNDAMENTAL ARCHITECTURE
 
 > **How to use this module.** Load this **first, in every run**. It defines how to reach and verify the remote Colab GPU; follow it before any heavy stage. Before locking a model, refresh the pick via `references/model-discovery.md`.
+>
+> This skill runs on **either Google Colab or Kaggle**. For backend specs, hybrid selection and the ephemeral-storage rule, see `references/remote-compute.md`.
 
 MY LOCAL LINUX COMPUTER
         |

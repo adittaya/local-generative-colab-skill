@@ -28,6 +28,7 @@ INSTALL.md                                   Copy-paste installation prompt (pla
 references/
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
+  remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
   visual-reconstruction.md                   Objective, image-generation quality stage, models
   visual-understanding-and-segmentation.md   Understanding, editability, SAM 2.1, BiRefNet
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
@@ -43,9 +44,11 @@ LICENSE                                      MIT
 
 ## Core idea
 
-The local Linux machine is **only the controller**. Every heavy AI workload — image
-generation, 3D generation, large-model segmentation, audio generation, reconstruction —
-runs on the remote Colab GPU. The controller inspects the installed Colab CLI, adapts to its
+The local Linux machine is **only the controller** and the **source of truth**. Every heavy
+AI workload — image generation, 3D generation, large-model segmentation, audio generation,
+reconstruction — runs on a **remote cloud GPU: Google Colab or Kaggle**, chosen per task.
+Both remote filesystems are **ephemeral scratch**; outputs are pulled back to the local home
+directory. The controller inspects the installed CLI (`colab` or `kaggle`), adapts to its
 actual syntax, verifies the remote GPU, and builds / executes / monitors / debugs / resumes /
 packages / returns the whole project without asking the user to do anything by hand.
 

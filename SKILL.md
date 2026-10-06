@@ -1,6 +1,6 @@
 ---
 name: local-generative-colab-skill
-description: Turns a local Linux machine into the controller for a heavy generative-media pipeline that actually runs on a remote Google Colab GPU (NVIDIA T4, ~16 GB) through the Colab CLI. It reconstructs high-quality visuals from source images/video frames, decomposes them into maximally editable transparent assets, generates missing or non-extractable elements, builds editable 3D assets, reconstructs/generates audio, and — for every task — researches and selects the current best specialist model rather than relying on one all-rounder. Use when the user wants image/video reconstruction and asset extraction, generative completion of complex elements, 3D asset generation, or audio reconstruction — and wants the pipeline genuinely executed remotely (build, run, monitor, debug, resume, package, return) rather than explained or handed back as a tutorial.
+description: Turns a local Linux machine into the controller for a heavy generative-media pipeline that actually runs on a remote Google Colab GPU (NVIDIA T4, ~16 GB) through the Google Colab or Kaggle CLI. It reconstructs high-quality visuals from source images/video frames, decomposes them into maximally editable transparent assets, generates missing or non-extractable elements, builds editable 3D assets, reconstructs/generates audio, and — for every task — researches and selects the current best specialist model rather than relying on one all-rounder. Use when the user wants image/video reconstruction and asset extraction, generative completion of complex elements, 3D asset generation, or audio reconstruction — and wants the pipeline genuinely executed remotely (build, run, monitor, debug, resume, package, return) rather than explained or handed back as a tutorial.
 ---
 
 # Local Generative Colab Skill
@@ -39,11 +39,11 @@ PACKAGE and RETURN the entire project.
 ## Architecture
 
 ```
-LOCAL LINUX CONTROLLER
+LOCAL LINUX CONTROLLER  (source of truth)
         |
-        |  Google Colab CLI
+        |  Colab CLI  or  Kaggle CLI
         v
-REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
+REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
         |
         +-------------------+-------------------+
         v                                       v
@@ -62,6 +62,12 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 - **Discover before you lock.** Never default to one all-rounder. For every task, research
   the current best model *for that job*, verify quality, hardware fit and licence, then use
   the specialist. Keep one fallback. See `references/model-discovery.md`.
+- **Remote is scratch; local is the source of truth.** Treat BOTH remote backends (Colab and
+  Kaggle) as ephemeral. Stage inputs out, do all heavy work remotely, and pull outputs and
+  checkpoints back to the local machine immediately. Never leave the only copy of a result
+  on a remote session. See `references/remote-compute.md`.
+- **Pick the backend per task.** Colab (1× T4, interactive) or Kaggle (2× T4, ~32 GB, 12 h
+  sessions, 30 h/week). Use Kaggle for heavier/longer jobs, Colab for interactive iteration.
 - **Controller only.** The local machine never runs heavy inference (no image/3D
   generation, no large-model segmentation, no audio generation, no heavy reconstruction).
   All heavy computation happens on Colab.
@@ -91,8 +97,9 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 0. **Model discovery & selection** — before each heavy stage, research the current best
    specialist model for that exact task and verify quality, hardware fit and licence
    (`references/model-discovery.md`). Never assume the models named below are still the best.
-1. Locate the input on the local machine and transfer it to the remote runtime
-   (`/content/project/`). Preserve originals unchanged.
+1. Choose the remote backend (Colab or Kaggle — see `references/remote-compute.md`), then
+   locate the input on the local machine and stage it to the remote runtime. Preserve
+   originals unchanged; the local machine stays the source of truth.
 2. High-quality image reconstruction — generative, reference/image-to-image conditioned,
    preserving composition, geometry, identity, layout, perspective, color and lighting.
 3. Visual understanding and semantic decomposition of every reconstructed frame.
@@ -117,6 +124,9 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
   upgrade triggers, recording, guardrails).
 - `references/architecture-and-cli.md` — fundamental architecture, local-vs-remote rules,
   the Google Colab CLI, remote GPU verification, input handling, remote project directory.
+- `references/remote-compute.md` — the two remote backends (**Google Colab** and **Kaggle**):
+  specs and free-tier limits, hybrid selection by use case, the `kaggle` CLI workflow, and
+  the **ephemeral-storage rule** (local home = source of truth).
 - `references/visual-reconstruction.md` — core project objective, image generation as the
   primary quality stage, preferred model families, reconstruction principles, output metadata.
 - `references/visual-understanding-and-segmentation.md` — visual understanding, maximum
