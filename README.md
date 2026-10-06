@@ -31,6 +31,7 @@ references/
   remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
   resource-discipline.md                     One task per session; multi-session scaling; no wasted runtime
   quota-and-accounts.md                      Monitor account limits; escalate account switches to the user
+  example-project-summary.md                 Worked example of the end-of-project summary format
   visual-reconstruction.md                   Objective, image-generation quality stage, models
   visual-understanding-and-segmentation.md   Understanding, editability, SAM 2.1, BiRefNet
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos

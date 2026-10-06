@@ -19,6 +19,7 @@ quota. Never compromise on quality, but never waste compute.
    - remote-compute.md
    - resource-discipline.md
    - quota-and-accounts.md
+   - example-project-summary.md
    - visual-reconstruction.md
    - visual-understanding-and-segmentation.md
    - asset-extraction-and-generation.md

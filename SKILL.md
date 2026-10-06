@@ -141,6 +141,13 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
    **Qwen3-TTS**, and word-level transcription with **Qwen3-ASR + Qwen3-ForcedAligner**.
 10. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
 
+## Project summary (deliverable)
+
+End every project with a **written summary banked to the local machine**, in the shape shown
+in `references/example-project-summary.md`: project state → exact diagnosis → model system
+with verdicts → quality playbook → hybrid ladder → operating runbook → pending items. Keep it
+specific and decision-oriented.
+
 ## References
 
 - `references/model-discovery.md` — the **research-and-select protocol**: how to find,
@@ -155,7 +162,10 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   light), the local machine's save/drive/collect-only role, multi-session horizontal
   scaling, and how and when to release each remote VM.
 - `references/quota-and-accounts.md` — **mandatory** quota monitoring: detecting account
-  limits, the escalation protocol to tell the user, and account rotation.
+  limits, common backend failures and their fixes, the escalation protocol to tell the user,
+  and account rotation.
+- `references/example-project-summary.md` — a worked example of the end-of-project summary
+  format (state, diagnosis, model verdicts, quality playbook, runbook, pending).
 - `references/visual-reconstruction.md` — core project objective, image generation as the
   primary quality stage, preferred model families, reconstruction principles, output metadata.
 - `references/visual-understanding-and-segmentation.md` — visual understanding, maximum
