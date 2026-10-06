@@ -29,6 +29,7 @@ references/
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
   3d-generation.md                           Hunyuan3D 2.1 3D asset generation
   video-generation.md                        LTX-2.5 video generation & regeneration
+  model-selection.md                         Use case → expert model map (video, image, 3D, audio)
 ```
 
 ## Core idea

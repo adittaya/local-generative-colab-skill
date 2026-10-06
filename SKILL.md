@@ -114,3 +114,5 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
 - `references/video-generation.md` — LTX-2.5 video generation **and regeneration**: modes,
   pipelines, IC-LoRA editing, VFX passes (restore, in/outpaint, SDR→HDR, AlphaGen),
   quantisation and VRAM guidance, and the ComfyUI workflow map.
+- `references/model-selection.md` — use case → expert model map: the best specialist model
+  for each job across video, image, segmentation, 3D and audio.
