@@ -100,7 +100,9 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
    in/outpainting, IC-LoRA transforms, upscale/restore).
 8. Audio reconstruction & generation — music with **ACE-Step 1.5**, SFX/ambience with
    **Stable Audio Open 1.5**, or synchronised AV audio via **LTX-2.5**.
-9. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
+9. Voice generation & word-level transcription — speech synthesis / voice cloning with
+   **Qwen3-TTS**, and word-level transcription with **Qwen3-ASR + Qwen3-ForcedAligner**.
+10. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
 
 ## References
 
@@ -118,5 +120,7 @@ REMOTE GOOGLE COLAB  ->  NVIDIA T4 GPU (~16 GB)
   quantisation and VRAM guidance, and the ComfyUI workflow map.
 - `references/audio.md` — audio branch: music with ACE-Step 1.5, SFX/ambience with Stable
   Audio Open 1.5, synchronised AV audio, and the analyse→decide→generate→mix pipeline.
+- `references/voice.md` — voice generation (Qwen3-TTS) and word-level transcription
+  (Qwen3-ASR + Qwen3-ForcedAligner): cloning, timestamps, diarisation, and integration.
 - `references/model-selection.md` — use case → expert model map: the best specialist model
   for each job across video, image, segmentation, 3D and audio.

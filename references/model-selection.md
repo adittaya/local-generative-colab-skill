@@ -87,6 +87,17 @@ The **Evidence** column is honest about how well-supported each pick is:
 | SFX / ambience | **Stable Audio Open** | Sound effects and atmosphere | Medium |
 | Synchronised AV audio | **LTX-2.5** / **MOVA** | Audio generated jointly with video | High |
 
+## Voice
+
+| Use case | Expert model | Why it wins | Evidence |
+|---|---|---|---|
+| Voice generation / cloning (TTS) | **Qwen3-TTS** (1.7B) | SOTA open TTS; 3-second clone; natural-language voice control; Apache 2.0 | High |
+| Lightweight voice cloning | **Chatterbox** (350M) | MIT; best clone quality per size; 23+ languages; paralinguistic tags | Medium |
+| Multilingual cloning + voice design | **VoxCPM2** (2B) | 30 languages, 48 kHz, controllable cloning; Apache 2.0 | Medium |
+| Word-level transcription (ASR) | **Qwen3-ASR + Qwen3-ForcedAligner** | 52 languages; dedicated word-level forced alignment; Apache 2.0 | High |
+| Timestamps + speaker diarisation in one pass | **IBM Granite-Speech-4.1-2B-Plus** | Native word timestamps and speaker labels, no extra pipeline | Medium |
+| Widest language coverage transcription | **Whisper Large V3 + WhisperX** | 99+ languages; largest ecosystem; MIT | High |
+
 ## How to choose
 
 1. Name the **task** (generate / regenerate / edit / restore / control).

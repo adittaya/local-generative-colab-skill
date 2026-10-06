@@ -12,6 +12,8 @@ It covers five coupled branches:
 - **3D asset generation** — turn genuinely volumetric elements into editable 3D assets with
   Hunyuan3D 2.1.
 - **Audio reconstruction / generation** — music, SFX and ambience for the reconstructed scene.
+- **Voice** — speech synthesis and voice cloning with **Qwen3-TTS**, and word-level
+  transcription with **Qwen3-ASR + Qwen3-ForcedAligner**.
 - **Video generation & regeneration** — generate or regenerate motion with **LTX-2.5**
   (Lightricks' open-weights audio-video world model): T2V/I2V/A2V, native multishot and
   synchronised audio, plus Retake, extend, inpainting/outpainting, IC-LoRA transforms,
@@ -30,6 +32,7 @@ references/
   3d-generation.md                           Hunyuan3D 2.1 3D asset generation
   video-generation.md                        LTX-2.5 video generation & regeneration
   audio.md                                   Audio: ACE-Step 1.5, Stable Audio Open 1.5
+  voice.md                                   Voice: Qwen3-TTS + word-level ASR / alignment
   model-selection.md                         Use case → expert model map (video, image, 3D, audio)
 docs/
   generation-times.html                      Local video generation-time chart (model × GPU)
