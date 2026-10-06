@@ -24,6 +24,7 @@ It covers five coupled branches:
 ```
 SKILL.md                                     Skill entry point (frontmatter + workflow)
 README.md                                    This file
+INSTALL.md                                   Copy-paste installation prompt (plain Markdown)
 references/
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
@@ -63,6 +64,8 @@ runtime, not read as a tutorial.
 
 ## Extras
 
+- `INSTALL.md` — the **installation prompt in plain Markdown** (copy the code block and
+  paste it into your agent). This is the easiest format to copy.
 - `docs/generation-times.html` — a self-contained chart of local video-generation times
   across GPUs (T4, RTX 3060/4080/3090/4090/5090, A100, H100) for the leading open video
   models. Open it in a browser; it adapts to light and dark mode.
