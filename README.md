@@ -30,6 +30,9 @@ references/
   3d-generation.md                           Hunyuan3D 2.1 3D asset generation
   video-generation.md                        LTX-2.5 video generation & regeneration
   model-selection.md                         Use case → expert model map (video, image, 3D, audio)
+docs/
+  generation-times.html                      Local video generation-time chart (model × GPU)
+LICENSE                                      MIT
 ```
 
 ## Core idea
@@ -47,6 +50,12 @@ Priority order throughout: **Quality > Fidelity > Editability > Speed**.
 Point your agent at `SKILL.md` and follow the workflow, pulling detail from `references/` as
 each stage needs it. The skill is written to be executed end to end against a live Colab
 runtime, not read as a tutorial.
+
+## Extras
+
+- `docs/generation-times.html` — a self-contained chart of local video-generation times
+  across GPUs (T4, RTX 3060/4080/3090/4090/5090, A100, H100) for the leading open video
+  models. Open it in a browser; it adapts to light and dark mode.
 
 ## Note on source material
 

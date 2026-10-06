@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Video Generation — Full Generation-Time Chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+    --font-mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
+    --bg:#f4f7f9;
+    --surface:#ffffff;
+    --surface2:#eef3f6;
+    --surface-elevated:#ffffff;
+    --border:rgba(15,40,60,0.10);
+    --border-bright:rgba(15,40,60,0.20);
+    --text:#0f2433;
+    --text-dim:#5b7280;
+    --accent:#0e7490;
+    --accent-dim:rgba(14,116,144,0.07);
+    --teal:#0d9488;
+    --green:#15803d;
+    --green-dim:rgba(21,128,61,0.09);
+    --amber:#b45309;
+    --amber-dim:rgba(180,83,9,0.10);
+    --red:#b91c1c;
+    --red-dim:rgba(185,28,28,0.09);
+    --slate:#334155;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b141a;
+      --surface:#111e26;
+      --surface2:#16262f;
+      --surface-elevated:#16262f;
+      --border:rgba(255,255,255,0.08);
+      --border-bright:rgba(255,255,255,0.16);
+      --text:#e3eef3;
+      --text-dim:#8ba3b0;
+      --accent:#38bdf8;
+      --accent-dim:rgba(56,189,248,0.12);
+      --teal:#2dd4bf;
+      --green:#4ade80;
+      --green-dim:rgba(74,222,128,0.12);
+      --amber:#fbbf24;
+      --amber-dim:rgba(251,191,36,0.12);
+      --red:#f87171;
+      --red-dim:rgba(248,113,113,0.12);
+      --slate:#cbd5e1;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    background-image:
+      radial-gradient(ellipse at 15% 0%, var(--accent-dim) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 100%, var(--green-dim) 0%, transparent 40%);
+    color:var(--text);
+    font-family:var(--font-body);
+    padding:44px 32px 64px;
+    min-height:100vh;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .animate{animation:fadeUp .4s ease-out both;animation-delay:calc(var(--i,0)*.05s);}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;}}
+  .container{max-width:1080px;margin:0 auto;}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:12px;}
+  h1{font-size:34px;font-weight:600;letter-spacing:-.5px;line-height:1.15;margin-bottom:8px;}
+  .subtitle{color:var(--text-dim);font-family:var(--font-mono);font-size:12.5px;margin-bottom:34px;line-height:1.6;}
+  h2{font-size:19px;font-weight:600;letter-spacing:-.2px;margin:0 0 4px;}
+  .sec-label{font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .sec-label::before{content:'';width:7px;height:7px;border-radius:2px;background:var(--teal);}
+  section{margin-bottom:44px;}
+
+  /* KPI */
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:38px;}
+  .kpi{background:var(--surface-elevated);border:1px solid var(--border);border-radius:12px;padding:18px 18px 16px;box-shadow:0 2px 10px rgba(15,40,60,.05);}
+  .kpi__v{font-size:30px;font-weight:600;line-height:1.05;font-variant-numeric:tabular-nums;letter-spacing:-1px;}
+  .kpi__v small{font-size:15px;font-weight:500;color:var(--text-dim);letter-spacing:0;}
+  .kpi__l{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;color:var(--text-dim);margin-top:7px;}
+  .c-teal{color:var(--teal);} .c-green{color:var(--green);} .c-amber{color:var(--amber);} .c-red{color:var(--red);} .c-accent{color:var(--accent);}
+
+  /* Bar chart */
+  .chart{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 24px 12px;}
+  .bar-row{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
+  .bar-row:last-child{border-bottom:none;}
+  .bar-name{font-size:12.5px;font-weight:500;line-height:1.35;}
+  .bar-name small{display:block;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:2px;font-weight:400;}
+  .bar-track{position:relative;height:26px;background:var(--surface2);border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--teal),var(--accent));display:flex;align-items:center;justify-content:flex-end;padding-right:9px;}
+  .bar-fill span{font-family:var(--font-mono);font-size:11px;font-weight:600;color:#fff;white-space:nowrap;}
+  .bar-fill--slow{background:linear-gradient(90deg,var(--amber),var(--red));}
+  .bar-note{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:12px;line-height:1.6;}
+
+  /* Tables */
+  .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.5;}
+  thead{position:sticky;top:0;z-index:2;}
+  th{background:var(--surface2);font-family:var(--font-mono);font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:1.1px;color:var(--text-dim);text-align:left;padding:12px 14px;border-bottom:2px solid var(--border-bright);white-space:nowrap;}
+  td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:var(--accent-dim);}
+  tbody tr:hover{background:var(--border);}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--font-mono);white-space:nowrap;}
+  .model{font-weight:600;min-width:150px;}
+  code{font-family:var(--font-mono);font-size:10.5px;background:var(--accent-dim);color:var(--accent);padding:1px 5px;border-radius:3px;}
+  small{color:var(--text-dim);font-size:10.5px;}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:9.5px;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap;letter-spacing:.3px;}
+  .pill::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .p-green{background:var(--green-dim);color:var(--green);}
+  .p-amber{background:var(--amber-dim);color:var(--amber);}
+  .p-red{background:var(--red-dim);color:var(--red);}
+  .p-teal{background:var(--accent-dim);color:var(--teal);}
+  .gpu-tag{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--slate);}
+
+  details{border:1px solid var(--border);border-radius:11px;overflow:hidden;background:var(--surface);}
+  summary{padding:14px 20px;font-family:var(--font-mono);font-size:12px;font-weight:600;cursor:pointer;list-style:none;display:flex;gap:8px;align-items:center;transition:background .15s;}
+  summary:hover{background:var(--surface2);}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:'▸';color:var(--text-dim);font-size:11px;transition:transform .15s;}
+  details[open] summary::before{transform:rotate(90deg);}
+  .body{padding:16px 20px;border-top:1px solid var(--border);font-size:13px;line-height:1.7;color:var(--text-dim);}
+  .body strong{color:var(--text);font-weight:600;}
+  .body code{font-size:11px;}
+  .body ul{margin:8px 0 0 18px;}
+  .body li{margin-bottom:5px;}
+  footer{font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim);line-height:1.7;border-top:1px solid var(--border);padding-top:18px;}
+  @media (max-width:768px){
+    body{padding:20px 14px 40px;}
+    h1{font-size:24px;}
+    .bar-row{grid-template-columns:1fr;gap:6px;}
+    .bar-name{min-width:0;}
+    td,th{padding:9px 10px;}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <p class="eyebrow animate" style="--i:0">Local video generation · benchmark chart</p>
+  <h1 class="animate" style="--i:1">Full Generation-Time Chart</h1>
+  <p class="subtitle animate" style="--i:2">Short-clip render times across GPUs — T4, consumer cards, and datacentre — for the leading open-weight video models. Times are wall-clock per clip; settings differ per row (see the Settings column), so read them as guidance, not a like-for-like race.</p>
+
+  <div class="kpi-row animate" style="--i:3">
+    <div class="kpi"><div class="kpi__v c-teal">~7<small> min</small></div><div class="kpi__l">LTX-2.3 on T4 (low-res + audio)</div></div>
+    <div class="kpi"><div class="kpi__v c-amber">~35<small> min</small></div><div class="kpi__l">Slowest T4 clip (MiniMax H3)</div></div>
+    <div class="kpi"><div class="kpi__v c-accent">19<small> s</small></div><div class="kpi__l">LTX-2.3 on H100 80GB</div></div>
+    <div class="kpi"><div class="kpi__v c-green">~5.7<small>×</small></div><div class="kpi__l">LTX-2.3 vs Wan 2.2 speed</div></div>
+  </div>
+
+  <!-- T4 bar chart -->
+  <section class="animate" style="--i:4">
+    <div class="sec-label">Focus · Colab T4 (16 GB)</div>
+    <h2>What a clip actually costs on a T4</h2>
+    <p class="subtitle" style="margin:8px 0 18px">Bars are wall-clock minutes per clip. Settings differ, so pair each bar with its label below it.</p>
+    <div class="chart">
+      <div class="bar-row">
+        <div class="bar-name">LTX-2.3 distilled <small>576×320 ×49 + audio · 8 steps</small></div>
+        <div class="bar-track"><div class="bar-fill" style="width:20%"><span>~7 min</span></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Wan 2.2 I2V (A14B) <small>offloaded · 480p–720p</small></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--slow" style="width:57%"><span>15–25 min</span></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Wan 2.1 14B <small>GGUF Q4 · 480×832 ×33 · 20 steps</small></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--slow" style="width:74%"><span>~26 min</span></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Wan 2.1 1.3B <small>832×480 ×81 · 30 steps</small></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--slow" style="width:89%"><span>~31 min</span></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">MiniMax H3 <small>GGUF Q4 · 864×480 ×124 + audio · 6 steps</small></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--slow" style="width:100%"><span>~35 min</span></div></div>
+      </div>
+      <p class="bar-note">Bar length scales to a 35-minute maximum. LTX-2.3 is the only one of these that also produces synchronised audio in the same pass; the Wan rows are silent and shorter clips.</p>
+    </div>
+  </section>
+
+  <!-- Full data table -->
+  <section class="animate" style="--i:5">
+    <div class="sec-label">Master table · every measured point</div>
+    <h2>Model × GPU × settings → time</h2>
+    <p class="subtitle" style="margin:8px 0 18px">All figures are community/official benchmarks for a short clip. <span class="pill p-teal">quantized</span> rows use GGUF/FP8 and offloading; <span class="pill p-green">full</span> rows are unquantized.</p>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>GPU</th>
+              <th>Settings</th>
+              <th class="num">Time / clip</th>
+              <th>Build</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="model">LTX-2.3</td><td><span class="gpu-tag">Colab T4 · 16 GB</span></td><td>576×320 ×49 + audio, 8 steps</td><td class="num">~7 min</td><td><span class="pill p-teal">GGUF Q4/Q3</span></td></tr>
+            <tr><td class="model">Wan 2.2 I2V</td><td><span class="gpu-tag">Colab T4</span></td><td>480p–720p, offloaded</td><td class="num">15–25 min</td><td><span class="pill p-teal">A14B</span></td></tr>
+            <tr><td class="model">Wan 2.1 14B</td><td><span class="gpu-tag">Colab T4</span></td><td>480×832 ×33, 20 steps</td><td class="num">~26 min</td><td><span class="pill p-teal">GGUF Q4</span></td></tr>
+            <tr><td class="model">Wan 2.1 1.3B</td><td><span class="gpu-tag">Colab T4</span></td><td>832×480 ×81, 30 steps</td><td class="num">~31 min</td><td><span class="pill p-green">fp16</span></td></tr>
+            <tr><td class="model">MiniMax H3</td><td><span class="gpu-tag">Colab T4</span></td><td>864×480 ×124 (5.2 s) + audio, 6 steps</td><td class="num">~35 min</td><td><span class="pill p-teal">GGUF Q4 + LoRA</span></td></tr>
+
+            <tr><td class="model">LTX-Video 0.9.5 (2B)</td><td><span class="gpu-tag">RTX 3060 · 12 GB</span></td><td>768×512 ×5 s</td><td class="num">~7 min</td><td><span class="pill p-teal">fp8</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 3060 · 12 GB</span></td><td>768×512, 30 steps</td><td class="num">3 m 45 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 3060 · 12 GB</span></td><td>768×512 / 720p</td><td class="num">OOM</td><td><span class="pill p-red">won't fit</span></td></tr>
+
+            <tr><td class="model">LTX-Video 2B</td><td><span class="gpu-tag">RTX 4080 Super · 16 GB</span></td><td>768×512 ×97 (~4 s)</td><td class="num">28 s</td><td><span class="pill p-green">fp16</span></td></tr>
+            <tr><td class="model">Wan 2.2 TI2V-5B</td><td><span class="gpu-tag">RTX 4080 Super · 16 GB</span></td><td>832×480 ×49 (~2 s)</td><td class="num">44 s</td><td><span class="pill p-green">fp16</span></td></tr>
+            <tr><td class="model">HunyuanVideo 720p</td><td><span class="gpu-tag">RTX 4080 Super · 16 GB</span></td><td>848×480 ×49</td><td class="num">156 s</td><td><span class="pill p-teal">fp8 + offload</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 4080 · 16 GB</span></td><td>768×512, 30 steps</td><td class="num">1 m 12 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 4080 · 16 GB</span></td><td>720p, 50 steps</td><td class="num">3 m 30 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 4080 · 16 GB</span></td><td>768×512, 30 steps</td><td class="num">5 m 20 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+
+            <tr><td class="model">LTX-2.3</td><td><span class="gpu-tag">RTX 3090 · 24 GB</span></td><td>720p ×5 s</td><td class="num">72 s</td><td><span class="pill p-teal">int8 + block-swap</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 3090 · 24 GB</span></td><td>768×512, 30 steps</td><td class="num">1 m 35 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 3090 · 24 GB</span></td><td>720p, 50 steps</td><td class="num">4 m 10 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 3090 · 24 GB</span></td><td>768×512, 30 steps</td><td class="num">4 m 45 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 3090 · 24 GB</span></td><td>720p, 50 steps</td><td class="num">11 m 20 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">HunyuanVideo</td><td><span class="gpu-tag">RTX 3090 · 24 GB</span></td><td>720p ×5 s</td><td class="num">240 s</td><td><span class="pill p-teal">GGUF Q4</span></td></tr>
+
+            <tr><td class="model">LTX-2.3</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>720p ×5 s</td><td class="num">44 s</td><td><span class="pill p-teal">int8 + block-swap</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>768×512, 30 steps</td><td class="num">47 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">LTX-Video 0.9.5 (2B)</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>768×512 ×5 s</td><td class="num">90 s</td><td><span class="pill p-green">fp16</span></td></tr>
+            <tr><td class="model">HunyuanVideo 1.5</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>480p I2V, step-distilled</td><td class="num">&lt; 75 s</td><td><span class="pill p-teal">fp8 + offload</span></td></tr>
+            <tr><td class="model">HunyuanVideo</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>720p ×5 s</td><td class="num">145 s</td><td><span class="pill p-teal">GGUF Q4</span></td></tr>
+            <tr><td class="model">LTX-2 (base)</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>720p, 50 steps</td><td class="num">2 m 15 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>768×512, 30 steps</td><td class="num">3 m 15 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>720p, 50 steps</td><td class="num">8 m 30 s</td><td><span class="pill p-teal">quantized</span></td></tr>
+            <tr><td class="model">Wan 2.2 TI2V-5B</td><td><span class="gpu-tag">RTX 4090 · 24 GB</span></td><td>720p ×5 s</td><td class="num">&lt; 9 min</td><td><span class="pill p-green">fp16</span></td></tr>
+
+            <tr><td class="model">LTX-2.3 distilled</td><td><span class="gpu-tag">RTX 5090 · 32 GB</span></td><td>832×480 ×81, 8 steps</td><td class="num">22.1 s</td><td><span class="pill p-teal">GGUF Q4</span></td></tr>
+            <tr><td class="model">Wan 2.2 14B</td><td><span class="gpu-tag">RTX 5090 · 32 GB</span></td><td>832×480 ×81, 6 steps</td><td class="num">125 s</td><td><span class="pill p-teal">GGUF Q4</span></td></tr>
+
+            <tr><td class="model">LTX-2.3</td><td><span class="gpu-tag">A100 · 80 GB</span></td><td>720p ×5 s</td><td class="num">28 s</td><td><span class="pill p-teal">int8</span></td></tr>
+            <tr><td class="model">HunyuanVideo</td><td><span class="gpu-tag">A100 · 80 GB</span></td><td>720p ×5 s</td><td class="num">78 s</td><td><span class="pill p-green">full precision</span></td></tr>
+            <tr><td class="model">LTX-2.3</td><td><span class="gpu-tag">H100 · 80 GB</span></td><td>720p ×5 s</td><td class="num">19 s</td><td><span class="pill p-teal">int8</span></td></tr>
+            <tr><td class="model">HunyuanVideo</td><td><span class="gpu-tag">H100 · 80 GB</span></td><td>720p ×5 s</td><td class="num">52 s</td><td><span class="pill p-green">full precision</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- A100 by resolution -->
+  <section class="animate" style="--i:6">
+    <div class="sec-label">Reference · A100 80 GB, 5-second clip</div>
+    <h2>How resolution changes the cost</h2>
+    <p class="subtitle" style="margin:8px 0 18px">Same 5-second clip at three resolutions, single A100 80 GB. The jump from 480p to 720p is where most models start to strain.</p>
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Model</th><th class="num">480p · 5 s</th><th class="num">720p · 5 s</th><th class="num">1080p · 5 s</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="model">LTX-Video</td><td class="num">45 s</td><td class="num">3 min</td><td class="num">8 min</td><td>Fastest by a wide margin</td></tr>
+            <tr><td class="model">Wan 2.1 1.3B</td><td class="num">3 min</td><td class="num">8 min</td><td class="num">OOM</td><td>Lowest-VRAM Wan</td></tr>
+            <tr><td class="model">Mochi 1</td><td class="num">8 min</td><td class="num">OOM</td><td class="num">OOM</td><td>480p only</td></tr>
+            <tr><td class="model">CogVideoX-5B</td><td class="num">10 min</td><td class="num">25 min</td><td class="num">OOM</td><td>—</td></tr>
+            <tr><td class="model">Wan 2.1 14B</td><td class="num">15 min</td><td class="num">45 min</td><td class="num">OOM</td><td>Quality leader of the group</td></tr>
+            <tr><td class="model">HunyuanVideo</td><td class="num">45 min</td><td class="num">~3 h</td><td class="num">OOM</td><td>Wants 80 GB+ at full quality</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <details class="animate" style="--i:7">
+    <summary>Read this before comparing rows — caveats &amp; how to read the chart</summary>
+    <div class="body">
+      <strong>These are not apples-to-apples.</strong> Each row comes from a different benchmark with its own resolution, frame count, step count, sampler and quantisation. A 7-minute T4 row and a 26-minute T4 row may be producing very different amounts of video. Compare within a group, not across groups.
+      <ul>
+        <li><strong>Resolution and frames move the number more than the model.</strong> Dropping from 720p to 480p, or from 81 to 49 frames, can cut render time by more than half.</li>
+        <li><strong>Step count is the other big lever.</strong> Distilled checkpoints (4–8 steps) finish several times faster than 30–50-step dev checkpoints, at a small fidelity cost.</li>
+        <li><strong>Quantisation buys VRAM, not speed.</strong> On GGUF builds the dequantisation step can itself become the bottleneck — which is why extra attention speed-ups don't always help.</li>
+        <li><strong>The T4 is compute-limited, not just VRAM-limited.</strong> It is Turing (sm75): no native FP8 or BF16, and roughly a quarter of a 4090's memory bandwidth. That is why the same model is minutes on a T4 and seconds on a 4090.</li>
+        <li><strong>On Colab the real ceiling is often host RAM (~12.7 GB), not VRAM (~15 GB).</strong> That is why MiniMax H3 needs a three-stage encode → sample → decode split to fit.</li>
+        <li><strong>OOM</strong> means the configuration ran out of memory at that resolution — it is not a model failure, just a hardware limit.</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer class="animate" style="--i:8">
+    Sources: Lightricks/community LTX-2.3 deployment notes and T4 walkthroughs · Wan-Video &amp; Colab notebook benchmarks (Wan 2.1/2.2) · Tencent HunyuanVideo · MiniMax H3 Colab notebook · Thunder Compute, Local AI Master, Apatero, Magic Hour, Zenn, KingsClaw, Clore.ai and 16 GB ComfyUI benchmark write-ups.<br>
+    Compiled 6 Oct 2026. Model versions and hardware claims move fast — verify the current repo, licence and quantisation options before downloading large checkpoints.
+  </footer>
+
+</div>
+</body>
+</html>
