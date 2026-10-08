@@ -49,6 +49,10 @@ sessions in parallel**: several Kaggle sessions (and Colab sessions where they h
 each taking a different task or a shard of the same task.
 
 - **One task per session.** Each session is an independent worker — give it exactly one task.
+- **Kaggle: use versions to parallelise.** Each `kaggle kernels push` = a **new version on a
+  new machine**. Create the input/weights **dataset** first (versioned, Tier 2), then push
+  **several kernel versions** to run **in parallel** — one task / shard per version. Don't
+  focus on one version; fan the work out (see `remote-compute.md`).
 - **Fan out** independent work — per image, per frame, per asset, per model — across sessions.
 - **Files are local to a session** and vanish with it (`/content` on Colab; the scratchpad on
   Kaggle). Pull results back to local (or Drive / `/kaggle/working`) as they are produced.

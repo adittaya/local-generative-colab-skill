@@ -100,7 +100,9 @@ REMOTE CLOUD GPU  ->  Kaggle (2x T4, ~32 GB, CPU+GPU)  [PRIMARY]  /  Colab (1x T
   a quick interactive test).
 - **Run many sessions in parallel — mandatory for speed.** Each session is its own VM with its
   own GPU/RAM/CPU, so run **multiple sessions at once**, **one task per session**, fanning
-  independent work out across them.
+  independent work out across them. On **Kaggle, use versions**: create the input/weights
+  **dataset** first, then push **several kernel versions** — each runs on its **own new
+  machine**, so run them **in parallel** rather than focusing on one version.
 - **Watch the quotas; escalate account switches to the user.** Quotas are per account and
   shared across your sessions. If a backend runs out — Kaggle quota exhausted, Colab not
   granting a GPU, repeated disconnects — **stop retrying and tell the user** so they can

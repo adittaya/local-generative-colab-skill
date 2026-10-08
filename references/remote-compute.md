@@ -78,6 +78,35 @@ kaggle quota                                       # remaining GPU hours
   `NvidiaTeslaP100`, `TpuV5E8`, `TpuV6E8`.
 - `kaggle kernels push` uploads **and runs**; fetch results with `kernels output`.
 
+## Kaggle versioning & parallel versions
+
+Kaggle's real speed lever is **versions** — each one runs on its **own fresh machine**.
+
+- **Datasets are versioned and immutable.** Create the input/weights dataset **first**
+  (`kaggle datasets create`), then add versions (`kaggle datasets version`). Each version is a
+  separate, permanent snapshot — this is the Tier 2 "heavy truth" store.
+- **Kernels are versioned too.** Every `kaggle kernels push` creates a **new version** that
+  runs on a **new machine**. Old versions stay; new runs don't collide.
+- **Run many versions in parallel.** Push several versions — different tasks, shards, seeds or
+  configs — and they execute **concurrently on separate machines**. **Do not focus on one
+  version**: fan the work out.
+
+```bash
+# 1. inputs / weights once, as a dataset (Tier 2)
+kaggle datasets create -p <dataset_folder>
+kaggle datasets version -p <dataset_folder> -m "v2 weights"
+
+# 2. one kernel per task / shard; each push = a new version = a new machine
+kaggle kernels push -p <kernel_a> --accelerator NvidiaTeslaT4
+kaggle kernels push -p <kernel_b> --accelerator NvidiaTeslaT4   # runs in parallel
+kaggle kernels push -p <kernel_c> --accelerator NvidiaTeslaT4
+```
+
+Fetch each with `kaggle kernels output <owner/kernel>/<version>`.
+
+**Guardrail:** versions still draw down the **same per-account quota** — parallel versions are
+faster, not free.
+
 ## Colab CLI workflow
 
 Inspect the installed CLI first and adapt to its real syntax:
