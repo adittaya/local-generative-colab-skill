@@ -20,8 +20,9 @@ the Colab or Kaggle CLI.
    their quotas are generous, but that does **not** license waste. Use them efficiently.
 3. **Never compromise on quality.** Efficiency means *no waste*, not *less effort*. Take the
    time and the steps the best result needs — and then release the machine.
-4. **Kaggle first.** Use the **Kaggle** backend first for all light-to-heavy work (CPU and
-   GPU, longer sessions, bigger published quota); **Colab is the fallback**.
+4. **Kaggle first — CPU and GPU.** Use **Kaggle** first for **all** work, whether it needs a
+   **GPU** or **only CPU** (Kaggle runs CPU-only too, with better specs than Colab); **Colab
+   is the fallback**.
 
 ## When to use
 
@@ -92,10 +93,11 @@ REMOTE CLOUD GPU  ->  Kaggle (2x T4, ~32 GB, CPU+GPU)  [PRIMARY]  /  Colab (1x T
   and **adaptive temporal sampling**), check it against the negative-prompt list, and return a
   **pass / needs-retake** verdict with evidence + timestamps. The same verify-before-deliver
   gate applies to images, audio and 3D. See `references/video-analysis.md`.
-- **Kaggle first — mandatory.** Use the **Kaggle** backend first for all light-to-heavy
-  work: it offers **CPU and GPU**, 2× T4 (~32 GB), 29 GB RAM, 12 h sessions and a published
-  30 h/week quota. **Colab is the fallback** (queued / out-of-quota Kaggle, or a quick
-  interactive test).
+- **Kaggle first — mandatory, for CPU and GPU alike.** Use **Kaggle** first for **all**
+  work: **CPU-only** (no accelerator), **GPU** (2× T4 ~32 GB, or P100) and TPU. Its CPU/RAM
+  also beat Colab's (4 cores / ~30 GB vs ~2 cores / ~12.7 GB), and it gives 12 h sessions and
+  a published 30 h/week GPU quota. **Colab is the fallback** (queued / out-of-quota Kaggle, or
+  a quick interactive test).
 - **Run many sessions in parallel — mandatory for speed.** Each session is its own VM with its
   own GPU/RAM/CPU, so run **multiple sessions at once**, **one task per session**, fanning
   independent work out across them.

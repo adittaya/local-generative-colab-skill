@@ -8,8 +8,10 @@
 
 The skill runs the same pipeline on either of **two free remote backends**:
 
-- **Kaggle — the default, mandatory first choice.** CPU *and* GPU, 2× T4 (~32 GB), 29 GB RAM,
-  12 h sessions, a published 30 h/week quota. Driven by the `kaggle` CLI.
+- **Kaggle — the default, mandatory first choice, for CPU *and* GPU work.** It runs
+  **CPU-only** (no accelerator), **GPU** (2× T4 ~32 GB, or P100), or **TPU** — and its CPU/RAM
+  specs (4 cores, ~29–30 GB RAM) also beat Colab's (~2 cores, ~12.7 GB). 12 h sessions, a
+  published 30 h/week GPU quota. Driven by the `kaggle` CLI.
 - **Google Colab — the fallback.** 1× T4, ~12.7 GB RAM, dynamic quota. Driven by the `colab`
   CLI. Use it when Kaggle is queued, out of quota, or for a quick interactive test.
 
@@ -21,6 +23,7 @@ the controller and the source of truth in both cases.
 | | **Kaggle** (primary) | **Google Colab** (fallback) |
 |---|---|---|
 | Accelerator | **2× NVIDIA T4** (32 GB total), or 1× P100 (16 GB); TPU v3-8 / v5e-8 / v6e-8 | 1× NVIDIA T4 |
+| **CPU-only** (no accelerator) | **Yes — 4 cores, ~30 GB RAM** | Yes — ~2 cores, ~12.7 GB RAM |
 | GPU VRAM | **~32 GB** (T4 ×2) | ~16 GB |
 | System RAM | **~29 GB** | ~12.7 GB |
 | CPU cores | 4 | ~2 |
@@ -44,6 +47,8 @@ without warning. Free accelerators on both can be queued at busy times.
   offers CPU *and* GPU, 2× T4 (32 GB) and 29 GB RAM for bigger models and longer clips, a 12 h
   session, and a published 30 h/week quota. `kaggle kernels push` fits a **commit-and-run**
   workflow well.
+- **CPU-only work also goes to Kaggle.** Kaggle runs without a GPU as well (4 cores, ~30 GB
+  RAM) — better CPU/RAM than Colab — so light/CPU-only tasks use Kaggle too, not Colab.
 - **Colab is the fallback.** Use it only when Kaggle is queued, out of quota, blocked by its
   phone-verification gate or non-commercial terms, or for a quick interactive test — then move
   the real work back to Kaggle.

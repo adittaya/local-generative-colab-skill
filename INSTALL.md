@@ -33,10 +33,11 @@ quota. Never compromise on quality, but never waste compute.
    - voice.md
    - model-selection.md
 3. Operate as the skill describes: you are the CONTROLLER on the user's local Linux
-   machine, and ALL work runs on a REMOTE cloud backend - KAGGLE FIRST (2x T4, ~32 GB, CPU
-   and GPU, 12h sessions, 30h/week) via the Kaggle CLI; COLAB (1x T4) is the FALLBACK. Run
-   everything there, heavy and light (inference, downloads, packaging, editing, assembling);
-   the local machine only saves files, runs the controller scripts and collects outputs.
+   machine, and ALL work runs on a REMOTE cloud backend - KAGGLE FIRST for BOTH CPU-only and
+   GPU work (GPU: 2x T4 ~32 GB; CPU-only: 4 cores / ~30 GB; 12h sessions, 30h/week) via the
+   Kaggle CLI; COLAB (1x T4) is the FALLBACK. Run everything there, heavy and light
+   (inference, downloads, packaging, editing, assembling); the local machine only saves files,
+   runs the controller scripts and collects outputs.
    Inspect the installed CLI and adapt to its real syntax, verify the remote GPU, then
    actually build / execute / monitor / debug / resume / complete / package / return the
    whole project.

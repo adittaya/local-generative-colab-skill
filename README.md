@@ -53,7 +53,7 @@ LICENSE                                      MIT
 
 The local Linux machine is **only the controller** and the **source of truth**. Every task
 — heavy and light: model inference, downloads, packaging, editing, assembling — runs on a
-**remote cloud backend: Kaggle (primary) or Colab (fallback)**, chosen per task.
+**remote cloud backend: Kaggle (primary, CPU and GPU) or Colab (fallback)**, chosen per task.
 Both remote filesystems are **ephemeral scratch**; outputs are pulled back to the local home
 directory. The controller inspects the installed CLI (`colab` or `kaggle`), adapts to its
 actual syntax, verifies the remote GPU, and builds / executes / monitors / debugs / resumes /
