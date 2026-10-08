@@ -15,7 +15,9 @@ the Colab or Kaggle CLI.
 1. **Switch each session off the moment its work is done.** Every remote session (Colab or
    Kaggle) must be **stopped as soon as its task is complete** and its outputs are pulled
    back to the local machine. A session left running after its work is finished burns
-   runtime and quota for nothing.
+   runtime and quota for nothing. (On **Kaggle** there are **two** GPU sessions per notebook —
+   *interactive* and *version*; the version finishing does **not** stop the interactive one, so
+   check **View Active Events** and stop it too.)
 2. **Free is not the same as unlimited — never waste compute.** These backends are free and
    their quotas are generous, but that does **not** license waste. Use them efficiently.
 3. **Never compromise on quality.** Efficiency means *no waste*, not *less effort*. Take the

@@ -68,6 +68,9 @@ each taking a different task or a shard of the same task.
 
 - **As soon as a task's outputs are pulled back to local, stop that session.** Do not leave
   it running "just in case" — an idle session burns runtime and quota for nothing.
+- **Kaggle has TWO GPU sessions per notebook.** Stopping the background *version* run does
+  **not** stop the **interactive** session. After a run, check **View Active Events** and
+  **Stop Session** on any interactive GPU session still active.
 - Keep a session alive **only** if the *very next* queued task genuinely needs the same
   environment — and stop it the moment that task finishes.
 - Never hold a quota'd session open doing nothing. Idle timeouts and weekly quotas exist;

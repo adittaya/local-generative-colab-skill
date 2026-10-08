@@ -35,6 +35,7 @@ quietly fall back to something weaker.
 | Kaggle: `Temporary failure in name resolution` → `outgoing traffic has been disabled` | the kernel has **no DNS/internet** despite `enable_internet: true` | **offline-first weights** — Kaggle Models (`model_sources`) or weight datasets (`dataset_sources`), loaded from `/kaggle/input/...` |
 | Kaggle: `Permission 'kernels.get' was denied`, empty `datasets list --mine` | the CLI **OAuth token is half-expired** (says logged in, but reads/writes are rejected) | legacy API key → `~/.kaggle/kaggle.json` (non-expiring), or `kaggle auth login --force` |
 | Session evicted / throttled while idle | idle time triggers eviction and throttling | keep the session busy; **stop it when its work is done** |
+| Kaggle: an **interactive** GPU session still active after the version run finished | interactive and version sessions are **independent** — the version ending does not close the interactive one | open **View Active Events** → **Stop Session** on the interactive GPU session |
 
 ## Escalation protocol — tell the user
 

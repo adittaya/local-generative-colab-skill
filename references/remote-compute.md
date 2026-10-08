@@ -107,6 +107,28 @@ Fetch each with `kaggle kernels output <owner/kernel>/<version>`.
 **Guardrail:** versions still draw down the **same per-account quota** — parallel versions are
 faster, not free.
 
+## Kaggle's two GPU sessions — stop the interactive one
+
+A Kaggle notebook can hold **two separate GPU sessions at once**:
+
+- **Interactive session** — the one you get while editing / running cells by hand.
+- **Save & Run All / Version session** — the background run that executes the whole notebook.
+
+They are **independent**. When the **version run finishes, its GPU usage stops — but an open
+interactive session keeps consuming GPU resources.** Stopping one does not stop the other.
+
+**After every run:**
+
+1. Open **"View Active Events"**.
+2. If an **interactive GPU session** is still active, **Stop Session** for it.
+3. Only then is the GPU truly released.
+
+Also: GPU notebook sessions have a documented **12-hour maximum execution time**, and GPU quota
+is tracked **separately** from session lifetime.
+
+**Use them wisely:** keep the **interactive** session for editing, exploration and long manual
+work; **stop it the moment you are done** — don't leave it open while background versions run.
+
 ## Colab CLI workflow
 
 Inspect the installed CLI first and adapt to its real syntax:
