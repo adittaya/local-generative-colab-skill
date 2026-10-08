@@ -1,54 +1,55 @@
-# Remote Compute — Google Colab & Kaggle
+# Remote Compute — Kaggle (primary) & Google Colab (fallback)
 
 > **How to use this module.** Load it alongside `architecture-and-cli.md` at the start of
-> every run. It defines the two remote backends, how to choose between them, and the
-> ephemeral-storage rule. Pick the backend per task.
+> every run. It defines the two remote backends, the **Kaggle-first** priority, and the
+> ephemeral-storage rule.
 
 ## Two backends, one controller
 
-The skill runs the same pipeline on either of **two free remote GPU backends**:
+The skill runs the same pipeline on either of **two free remote backends**:
 
-- **Google Colab** — driven by the `colab` CLI.
-- **Kaggle** — driven by the `kaggle` CLI.
+- **Kaggle — the default, mandatory first choice.** CPU *and* GPU, 2× T4 (~32 GB), 29 GB RAM,
+  12 h sessions, a published 30 h/week quota. Driven by the `kaggle` CLI.
+- **Google Colab — the fallback.** 1× T4, ~12.7 GB RAM, dynamic quota. Driven by the `colab`
+  CLI. Use it when Kaggle is queued, out of quota, or for a quick interactive test.
 
-The local machine stays the controller and the source of truth in both cases. Choose the
-backend per task (see "When to use which").
+**Use Kaggle first for all light-to-heavy work; fall back to Colab.** The local machine stays
+the controller and the source of truth in both cases.
 
 ## Specifications & limits (free tiers)
 
-| | **Google Colab** | **Kaggle** |
+| | **Kaggle** (primary) | **Google Colab** (fallback) |
 |---|---|---|
-| Accelerator | 1× NVIDIA T4 | **2× NVIDIA T4** (32 GB total), or 1× P100 (16 GB); TPU v3-8 / v5e-8 / v6e-8 |
-| GPU VRAM | ~16 GB | **~32 GB** (T4 ×2) |
-| System RAM | ~12.7 GB | **~29 GB** |
-| CPU cores | ~2 | 4 |
-| Session length | variable; times out | **12 h** (CPU/GPU), 9 h (TPU) |
-| Idle timeout | ~90 min | ~60 min |
-| Weekly GPU quota | unpublished, dynamic | **30 h/week** (published), ~20 h TPU |
-| Disk | ephemeral | 20 GB auto-saved `/kaggle/working` + non-persistent scratchpad |
-| Control | `colab` CLI (interactive sessions) | `kaggle` CLI (push → run → pull outputs) |
-| Persistence option | Google Drive mount | `/kaggle/working` (20 GB) + Kaggle datasets |
-| Terms | general | **personal, non-commercial use** |
-| Sign-up gate | Google account | Kaggle account + **phone verification** |
+| Accelerator | **2× NVIDIA T4** (32 GB total), or 1× P100 (16 GB); TPU v3-8 / v5e-8 / v6e-8 | 1× NVIDIA T4 |
+| GPU VRAM | **~32 GB** (T4 ×2) | ~16 GB |
+| System RAM | **~29 GB** | ~12.7 GB |
+| CPU cores | 4 | ~2 |
+| Session length | **12 h** (CPU/GPU), 9 h (TPU) | variable; times out |
+| Idle timeout | ~60 min | ~90 min |
+| Weekly GPU quota | **30 h/week** (published), ~20 h TPU | unpublished, dynamic |
+| Disk | 20 GB auto-saved `/kaggle/working` + non-persistent scratchpad | ephemeral |
+| Control | `kaggle` CLI (push → run → pull outputs) | `colab` CLI (interactive sessions) |
+| Persistence option | `/kaggle/working` (20 GB) + Kaggle datasets | Google Drive mount |
+| Terms | **personal, non-commercial use** | general |
+| Sign-up gate | Kaggle account + **phone verification** | Google account |
 
-Kaggle's quota is **published and counted** (you can see remaining hours), which makes it
-more predictable; Colab's is dynamic and can be cut without warning. Free accelerators on
-both can be queued at busy times.
+**Kaggle is the primary backend:** it offers both **CPU and GPU**, more VRAM and RAM, longer
+sessions, and a **published, counted quota** (you can see remaining hours) — so it is faster,
+more predictable, and suits light-to-heavy work. Colab's quota is dynamic and can be cut
+without warning. Free accelerators on both can be queued at busy times.
 
-## When to use which (hybrid selection)
+## When to use which (Kaggle first)
 
-- **Use Kaggle when you need more power or longer runs.** 2× T4 (32 GB) and 29 GB RAM let
-  you run bigger models and longer clips with more offloading headroom; the 12 h session and
-  published 30 h/week quota suit long or batched jobs. Kaggle's `kernels push` also fits a
-  **commit-and-run** workflow well.
-- **Use Colab when you need interactive iteration**, a quick job, the interactive `colab`
-  CLI, or a TPU — or when Kaggle's queue, phone-verification gate, or non-commercial terms
-  are blockers.
-- **Split across both** when one backend is quota-limited: e.g. iterate on Colab, run the
-  heavy batch on Kaggle.
-- **Run both in parallel.** Colab and Kaggle are independent, so split independent tasks
-  across them and run them **concurrently in the background** to finish faster — while
-  keeping one task per machine at a time (see `resource-discipline.md`).
+- **Kaggle is the mandatory first choice.** Use it for **all light-to-heavy work** — it
+  offers CPU *and* GPU, 2× T4 (32 GB) and 29 GB RAM for bigger models and longer clips, a 12 h
+  session, and a published 30 h/week quota. `kaggle kernels push` fits a **commit-and-run**
+  workflow well.
+- **Colab is the fallback.** Use it only when Kaggle is queued, out of quota, blocked by its
+  phone-verification gate or non-commercial terms, or for a quick interactive test — then move
+  the real work back to Kaggle.
+- **Run both in parallel when it helps.** They are independent, so split tasks across them
+  and run **concurrently in the background** to finish faster — keeping one task per machine
+  at a time (see `resource-discipline.md`).
 
 ## Kaggle CLI workflow
 

@@ -20,6 +20,8 @@ the Colab or Kaggle CLI.
    their quotas are generous, but that does **not** license waste. Use them efficiently.
 3. **Never compromise on quality.** Efficiency means *no waste*, not *less effort*. Take the
    time and the steps the best result needs — and then release the machine.
+4. **Kaggle first.** Use the **Kaggle** backend first for all light-to-heavy work (CPU and
+   GPU, longer sessions, bigger published quota); **Colab is the fallback**.
 
 ## When to use
 
@@ -52,9 +54,9 @@ PACKAGE and RETURN the entire project.
 ```
 LOCAL LINUX CONTROLLER  (source of truth)
         |
-        |  Colab CLI  or  Kaggle CLI
+        |  Kaggle CLI (primary)  or  Colab CLI (fallback)
         v
-REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
+REMOTE CLOUD GPU  ->  Kaggle (2x T4, ~32 GB, CPU+GPU)  [PRIMARY]  /  Colab (1x T4)  [fallback]
         |
         +-------------------+-------------------+
         v                                       v
@@ -90,10 +92,13 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   and **adaptive temporal sampling**), check it against the negative-prompt list, and return a
   **pass / needs-retake** verdict with evidence + timestamps. The same verify-before-deliver
   gate applies to images, audio and 3D. See `references/video-analysis.md`.
-- **Run many sessions in parallel — mandatory for speed.** Each Colab/Kaggle session is its
-  own VM with its own GPU/RAM/CPU, so run **multiple sessions across both backends at once**,
-  **one task per session**, fanning independent work out across them. Use Kaggle for
-  heavier/longer jobs (2× T4, ~32 GB) and Colab for interactive iteration.
+- **Kaggle first — mandatory.** Use the **Kaggle** backend first for all light-to-heavy
+  work: it offers **CPU and GPU**, 2× T4 (~32 GB), 29 GB RAM, 12 h sessions and a published
+  30 h/week quota. **Colab is the fallback** (queued / out-of-quota Kaggle, or a quick
+  interactive test).
+- **Run many sessions in parallel — mandatory for speed.** Each session is its own VM with its
+  own GPU/RAM/CPU, so run **multiple sessions at once**, **one task per session**, fanning
+  independent work out across them.
 - **Watch the quotas; escalate account switches to the user.** Quotas are per account and
   shared across your sessions. If a backend runs out — Kaggle quota exhausted, Colab not
   granting a GPU, repeated disconnects — **stop retrying and tell the user** so they can

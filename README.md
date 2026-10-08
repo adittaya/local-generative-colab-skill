@@ -30,7 +30,7 @@ references/
   prompt-engine.md                           Task-specific, model-aware prompts + negative prompts
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
-  remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
+  remote-compute.md                          Kaggle (primary) vs Colab (fallback): specs, priority, storage
   persistence-protocol.md                    3 tiers (local light truth / Kaggle heavy truth / sessions nothing)
   resource-discipline.md                     One task per session; multi-session scaling; no wasted runtime
   quota-and-accounts.md                      Monitor account limits; escalate account switches to the user
@@ -53,7 +53,7 @@ LICENSE                                      MIT
 
 The local Linux machine is **only the controller** and the **source of truth**. Every task
 — heavy and light: model inference, downloads, packaging, editing, assembling — runs on a
-**remote cloud GPU: Google Colab or Kaggle**, chosen per task.
+**remote cloud backend: Kaggle (primary) or Colab (fallback)**, chosen per task.
 Both remote filesystems are **ephemeral scratch**; outputs are pulled back to the local home
 directory. The controller inspects the installed CLI (`colab` or `kaggle`), adapts to its
 actual syntax, verifies the remote GPU, and builds / executes / monitors / debugs / resumes /

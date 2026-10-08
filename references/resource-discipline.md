@@ -43,10 +43,10 @@ downloads.** The local machine is the controller and the store — not a worker.
 
 ## Parallel sessions — scale horizontally (mandatory for speed)
 
-Each session — Colab or Kaggle — gets its **own VM with its own GPU, VRAM, RAM and CPU**.
-Sessions do **not** share memory. So to finish faster, run **multiple sessions in parallel**:
-several Colab sessions *and* several Kaggle sessions at once, each taking a different task or
-a shard of the same task.
+Each session — **Kaggle (primary) or Colab (fallback)** — gets its **own VM with its own GPU,
+VRAM, RAM and CPU**. Sessions do **not** share memory. So to finish faster, run **multiple
+sessions in parallel**: several Kaggle sessions (and Colab sessions where they help) at once,
+each taking a different task or a shard of the same task.
 
 - **One task per session.** Each session is an independent worker — give it exactly one task.
 - **Fan out** independent work — per image, per frame, per asset, per model — across sessions.
