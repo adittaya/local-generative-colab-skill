@@ -40,6 +40,7 @@ references/
   asset-extraction-and-generation.md         Classification, extraction vs generation, text, logos
   3d-generation.md                           Hunyuan3D 2.1 3D asset generation
   video-generation.md                        LTX-2.5 video generation & regeneration
+  video-analysis.md                          MOSS-VL video understanding + finalisation gate
   audio.md                                   Audio: ACE-Step 1.5, Stable Audio Open 1.5
   voice.md                                   Voice: Qwen3-TTS + word-level ASR / alignment
   model-selection.md                         Use case → expert model map (video, image, 3D, audio)

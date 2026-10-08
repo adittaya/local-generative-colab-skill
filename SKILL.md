@@ -85,6 +85,11 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
   log every generation's params + seed to `MANIFEST.json` so any lost output is reproducible
   bit-for-bit. Keep the local home (≈ 5 GB) at **≥ 500 MB free** — route anything larger
   through Tier 2. See `references/persistence-protocol.md`.
+- **Watch every video before delivering it.** No video is handed to the user until it has
+  been analysed and verified: run the **MOSS-VL** video-understanding pass (with **Whisper**
+  and **adaptive temporal sampling**), check it against the negative-prompt list, and return a
+  **pass / needs-retake** verdict with evidence + timestamps. The same verify-before-deliver
+  gate applies to images, audio and 3D. See `references/video-analysis.md`.
 - **Run many sessions in parallel — mandatory for speed.** Each Colab/Kaggle session is its
   own VM with its own GPU/RAM/CPU, so run **multiple sessions across both backends at once**,
   **one task per session**, fanning independent work out across them. Use Kaggle for
@@ -147,7 +152,10 @@ REMOTE CLOUD GPU  ->  Colab (1x T4, ~16 GB)  or  Kaggle (2x T4, ~32 GB)
    **Stable Audio Open 1.5**, or synchronised AV audio via **LTX-2.5**.
 9. Voice generation & word-level transcription — speech synthesis / voice cloning with
    **Qwen3-TTS**, and word-level transcription with **Qwen3-ASR + Qwen3-ForcedAligner**.
-10. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
+10. **Finalisation gate** — analyse and verify each artefact before delivery; for video run
+    the **MOSS-VL** understanding pass (Whisper + adaptive temporal sampling) and return a
+    pass / needs-retake verdict. See `references/video-analysis.md`.
+11. Layer reconstruction, quality control, final asset library, ZIP, return to local machine.
 
 ## Project summary (deliverable)
 
@@ -192,6 +200,9 @@ specific and decision-oriented.
 - `references/video-generation.md` — LTX-2.5 video generation **and regeneration**: modes,
   pipelines, IC-LoRA editing, VFX passes (restore, in/outpaint, SDR→HDR, AlphaGen),
   quantisation and VRAM guidance, and the ComfyUI workflow map.
+- `references/video-analysis.md` — **mandatory** video understanding & finalisation: MOSS-VL
+  11B on dual GPU, Whisper, adaptive temporal sampling, the `ask(video, question)` interface,
+  and the verify-before-deliver gate.
 - `references/audio.md` — audio branch: music with ACE-Step 1.5, SFX/ambience with Stable
   Audio Open 1.5, synchronised AV audio, and the analyse→decide→generate→mix pipeline.
 - `references/voice.md` — voice generation (Qwen3-TTS) and word-level transcription
