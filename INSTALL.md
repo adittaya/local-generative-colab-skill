@@ -14,6 +14,8 @@ quota. Never compromise on quality, but never waste compute.
 1. Read SKILL.md at the repository root. It defines your role, the non-negotiable rules,
    the pipeline stages and the reference index.
 2. Load the reference files from references/ as each stage needs them:
+   - master-specification.md
+   - prompt-engine.md
    - model-discovery.md
    - architecture-and-cli.md
    - remote-compute.md

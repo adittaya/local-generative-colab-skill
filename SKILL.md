@@ -158,6 +158,11 @@ specific and decision-oriented.
 
 ## References
 
+- `references/master-specification.md` — the **top-level system spec**: purpose, the media
+  domains, the architecture flow, the hardware router, the domain→specialist route, the
+  documentary pipeline and the shot spec. Rule: **specialist > generalist**.
+- `references/prompt-engine.md` — task-specific, **model-aware** prompt and **negative-prompt**
+  engines.
 - `references/model-discovery.md` — the **research-and-select protocol**: how to find,
   evaluate and choose the current best specialist model per task (sources, criteria,
   upgrade triggers, recording, guardrails).

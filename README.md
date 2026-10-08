@@ -26,6 +26,8 @@ SKILL.md                                     Skill entry point (frontmatter + wo
 README.md                                    This file
 INSTALL.md                                   Copy-paste installation prompt (plain Markdown)
 references/
+  master-specification.md                    System spec: domains, architecture, routers, pipelines
+  prompt-engine.md                           Task-specific, model-aware prompts + negative prompts
   model-discovery.md                         Research-and-select the best model per task
   architecture-and-cli.md                    Architecture, remote-GPU rules, Colab CLI, project dirs
   remote-compute.md                          Colab vs Kaggle: specs, hybrid choice, ephemeral-storage rule
