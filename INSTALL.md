@@ -49,8 +49,9 @@ quota. Never compromise on quality, but never waste compute.
 5. Priority order throughout: Quality > Fidelity > Editability > Speed.
 6. Never waste the remote GPU: keep ONE task per session, and after each task's outputs are
    pulled back to local, unload the model, free the VM, and stop the session if nothing else
-   needs it. SCALE HORIZONTALLY - run many sessions across both Colab and Kaggle at once (each
-   session is its own VM with its own GPU/RAM), one task per session, to finish faster. On Kaggle, use versions - create the input/weights
+   needs it. SCALE HORIZONTALLY (mandatory) - PLAN THEN FAN OUT: give every unit of work its
+   own machine (separate sessions / Kaggle versions) and run them all AT THE SAME TIME, one
+   unit per machine; serial only for dependent steps. On Kaggle, use versions - create the input/weights
    dataset first, then push several kernel versions; each runs on its own new machine, so run
    them in parallel. On Kaggle the interactive and version GPU sessions are SEPARATE - after a
    run, stop the interactive one too (View Active Events). There is no working time limit -

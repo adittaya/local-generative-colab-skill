@@ -43,6 +43,11 @@ downloads.** The local machine is the controller and the store — not a worker.
 
 ## Parallel sessions — scale horizontally (mandatory for speed)
 
+**After the plan, fan the work out — this is mandatory, not optional.** A plan usually leaves
+many independent units (per shot, per asset, per model, per shard, per render). Give **each
+unit its own machine**, and run them **concurrently**. Serial execution is only for work that
+**genuinely depends** on the previous step.
+
 Each session — **Kaggle (primary) or Colab (fallback)** — gets its **own VM with its own GPU,
 VRAM, RAM and CPU**. Sessions do **not** share memory. So to finish faster, run **multiple
 sessions in parallel**: several Kaggle sessions (and Colab sessions where they help) at once,

@@ -100,11 +100,12 @@ REMOTE CLOUD GPU  ->  Kaggle (2x T4, ~32 GB, CPU+GPU)  [PRIMARY]  /  Colab (1x T
   also beat Colab's (4 cores / ~30 GB vs ~2 cores / ~12.7 GB), and it gives 12 h sessions and
   a published 30 h/week GPU quota. **Colab is the fallback** (queued / out-of-quota Kaggle, or
   a quick interactive test).
-- **Run many sessions in parallel — mandatory for speed.** Each session is its own VM with its
-  own GPU/RAM/CPU, so run **multiple sessions at once**, **one task per session**, fanning
-  independent work out across them. On **Kaggle, use versions**: create the input/weights
-  **dataset** first, then push **several kernel versions** — each runs on its **own new
-  machine**, so run them **in parallel** rather than focusing on one version.
+- **Plan, then fan out in parallel — mandatory for speed.** After the plan, break the work
+  into **independent units** and give **every unit its own machine** — separate sessions /
+  Kaggle **versions** — all running **at the same time**. Never work the queue serially when it
+  can be parallelised; serial is only for steps that genuinely depend on the previous one. On
+  **Kaggle, use versions**: create the input/weights **dataset** first, then push **several
+  kernel versions** — each runs on its **own new machine**.
 - **Run a self-healing watchdog — mandatory for background jobs.** Background/parallel jobs
   (parallel sessions, Kaggle versions, long Colab runs) must be watched by a **watchdog**, not
   a passive poller: **auto-pull** outputs on success, **capture logs** on failure, **re-push
