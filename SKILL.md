@@ -105,6 +105,11 @@ REMOTE CLOUD GPU  ->  Kaggle (2x T4, ~32 GB, CPU+GPU)  [PRIMARY]  /  Colab (1x T
   independent work out across them. On **Kaggle, use versions**: create the input/weights
   **dataset** first, then push **several kernel versions** — each runs on its **own new
   machine**, so run them **in parallel** rather than focusing on one version.
+- **Run a self-healing watchdog — mandatory for background jobs.** Background/parallel jobs
+  (parallel sessions, Kaggle versions, long Colab runs) must be watched by a **watchdog**, not
+  a passive poller: **auto-pull** outputs on success, **capture logs** on failure, **re-push
+  once** on transient errors, and **alert** on stalls or quota limits. See
+  `references/watchdog.md`.
 - **Watch the quotas; escalate account switches to the user.** Quotas are per account and
   shared across your sessions. If a backend runs out — Kaggle quota exhausted, Colab not
   granting a GPU, repeated disconnects — **stop retrying and tell the user** so they can
@@ -196,6 +201,9 @@ specific and decision-oriented.
 - `references/resource-discipline.md` — runtime discipline: all work remotely (heavy to
   light), the local machine's save/drive/collect-only role, multi-session horizontal
   scaling, and how and when to release each remote VM.
+- `references/watchdog.md` — **mandatory** self-healing watchdog for background jobs:
+  auto-pull on success, capture logs on failure, one re-push on transient errors, alert on
+  stalls/quota.
 - `references/quota-and-accounts.md` — **mandatory** quota monitoring: detecting account
   limits, common backend failures and their fixes, the escalation protocol to tell the user,
   and account rotation.

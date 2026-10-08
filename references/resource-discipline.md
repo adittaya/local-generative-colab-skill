@@ -53,6 +53,9 @@ each taking a different task or a shard of the same task.
   new machine**. Create the input/weights **dataset** first (versioned, Tier 2), then push
   **several kernel versions** to run **in parallel** — one task / shard per version. Don't
   focus on one version; fan the work out (see `remote-compute.md`).
+- **Watch them with a self-healing watchdog.** Background jobs need active supervision —
+  auto-pull on success, capture logs on failure, one re-push on transient errors, alert on
+  stall/quota (see `watchdog.md`).
 - **Fan out** independent work — per image, per frame, per asset, per model — across sessions.
 - **Files are local to a session** and vanish with it (`/content` on Colab; the scratchpad on
   Kaggle). Pull results back to local (or Drive / `/kaggle/working`) as they are produced.

@@ -22,6 +22,7 @@ quota. Never compromise on quality, but never waste compute.
    - persistence-protocol.md
    - resource-discipline.md
    - quota-and-accounts.md
+   - watchdog.md
    - example-project-summary.md
    - visual-reconstruction.md
    - visual-understanding-and-segmentation.md
@@ -58,6 +59,9 @@ quota. Never compromise on quality, but never waste compute.
    over its limit (Kaggle quota exhausted, Colab not granting a GPU, repeated disconnects),
    stop retrying and TELL ME so I can switch accounts - then continue on the other backend.
    The local machine only saves files, runs the controller scripts and collects outputs.
+8. For background/parallel jobs, run a SELF-HEALING WATCHDOG: auto-pull outputs on success,
+   capture logs on failure, re-push ONCE on transient errors, and alert me on stalls or quota
+   limits.
 
 The skill covers six branches: visual reconstruction; editable asset extraction (SAM 2.1
 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation

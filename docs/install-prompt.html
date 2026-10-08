@@ -84,6 +84,7 @@ quota. Never compromise on quality, but never waste compute.
    - persistence-protocol.md
    - resource-discipline.md
    - quota-and-accounts.md
+   - watchdog.md
    - example-project-summary.md
    - visual-reconstruction.md
    - visual-understanding-and-segmentation.md
@@ -99,6 +100,7 @@ quota. Never compromise on quality, but never waste compute.
 5. Priority order throughout: Quality &gt; Fidelity &gt; Editability &gt; Speed.
 6. Never waste the remote GPU: keep ONE task per session, and after each task's outputs are pulled back to local, unload the model, free the VM, and stop the session if nothing else needs it. SCALE HORIZONTALLY - run many sessions across both Colab and Kaggle at once (each session is its own VM with its own GPU/RAM), one task per session, to finish faster. On Kaggle, use versions - create the input/weights dataset first, then push several kernel versions; each runs on its own new machine, so run them in parallel. On Kaggle the interactive and version GPU sessions are SEPARATE - after a run, stop the interactive one too (View Active Events). There is no working time limit - prioritise quality - but never leave a session idle.
 7. Quotas are PER ACCOUNT and shared across sessions. Monitor them, and if any backend goes over its limit (Kaggle quota exhausted, Colab not granting a GPU, repeated disconnects), stop retrying and TELL ME so I can switch accounts - then continue on the other backend. The local machine only saves files, runs the controller scripts and collects outputs.
+8. For background/parallel jobs, run a SELF-HEALING WATCHDOG: auto-pull outputs on success, capture logs on failure, re-push ONCE on transient errors, and alert me on stalls or quota limits.
 
 The skill covers six branches: visual reconstruction; editable asset extraction (SAM 2.1 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation (ACE-Step 1.5, Stable Audio Open 1.5); voice generation &amp; word-level transcription (Qwen3-TTS, Qwen3-ASR + Qwen3-ForcedAligner); and video generation &amp; regeneration (LTX-2.5). Use references/model-selection.md to choose the right expert model for each task, and docs/generation-times.html for local video render-time expectations.
 

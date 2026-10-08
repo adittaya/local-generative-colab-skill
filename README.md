@@ -33,6 +33,7 @@ references/
   remote-compute.md                          Kaggle (primary) vs Colab (fallback): specs, priority, storage
   persistence-protocol.md                    3 tiers (local light truth / Kaggle heavy truth / sessions nothing)
   resource-discipline.md                     One task per session; multi-session scaling; no wasted runtime
+  watchdog.md                                Self-healing background-job watchdog (pull/log/re-push/alert)
   quota-and-accounts.md                      Monitor account limits; escalate account switches to the user
   example-project-summary.md                 Worked example of the end-of-project summary format
   visual-reconstruction.md                   Objective, image-generation quality stage, models
