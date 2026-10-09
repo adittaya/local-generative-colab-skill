@@ -66,47 +66,34 @@
       <span class="label">Installation prompt</span>
       <button id="copyBtn" onclick="copyPrompt()">Tap to copy</button>
     </div>
-<pre id="prompt">Install and run the "local-generative-colab-skill".
+<pre id="prompt">Install and use the skill at:
+https://github.com/adittaya/local-generative-colab-skill
 
-Repository: https://github.com/adittaya/local-generative-colab-skill
+Do not ingest every reference at startup. Read SKILL.md and references/workflow-contract.md first. Then load only the reference needed for the current task.
 
-MANDATORY FIRST: read the "Mandatory disclaimer" in SKILL.md. Switch each remote session OFF
-as soon as its work is done - free is not unlimited, and idle sessions waste runtime and
-quota. Never compromise on quality, but never waste compute.
+PRE-FLIGHT
+1. Verify actual local shell/file access and the installed CLI syntax.
+2. Verify authentication without printing secrets. A config file existing does not prove authentication.
+3. Verify remote backend availability and quota with a harmless status check. Do not claim GPU access until a submitted job confirms it.
+4. If a required capability is unavailable, report the blocker and offer a realistic fallback. Do not pretend to execute.
 
-1. Read SKILL.md at the repository root. It defines your role, the non-negotiable rules, the pipeline stages and the reference index.
-2. Load the reference files from references/ as each stage needs them:
-   - master-specification.md
-   - prompt-engine.md
-   - model-discovery.md
-   - architecture-and-cli.md
-   - remote-compute.md
-   - persistence-protocol.md
-   - resource-discipline.md
-   - quota-and-accounts.md
-   - watchdog.md
-   - example-project-summary.md
-   - visual-reconstruction.md
-   - visual-understanding-and-segmentation.md
-   - asset-extraction-and-generation.md
-   - 3d-generation.md
-   - video-generation.md
-   - video-analysis.md
-   - audio.md
-   - voice.md
-   - model-selection.md
-3. Operate as the skill describes: you are the CONTROLLER on the user's local Linux machine, and ALL work runs on a REMOTE cloud backend - KAGGLE FIRST for BOTH CPU-only and GPU work (GPU: 2x T4 ~32 GB; CPU-only: 4 cores / ~30 GB; 12h sessions, 30h/week) via the Kaggle CLI; COLAB (1x T4) is the FALLBACK. Run everything there, heavy and light (inference, downloads, packaging, editing, assembling); the local machine only saves files, runs the controller scripts and collects outputs. Inspect the installed CLI and adapt to its real syntax, verify the remote GPU, then actually build / execute / monitor / debug / resume / complete / package / return the whole project. Treat BOTH remote filesystems as temporary scratch; the local machine's home directory is the source of truth - stage inputs out and pull outputs and checkpoints back to local.
-4. Do not merely explain the workflow, do not give a tutorial, do not tell the user to do anything by hand, and do not stop after generating scripts. Execute.
-5. Priority order throughout: Quality &gt; Fidelity &gt; Editability &gt; Speed.
-6. Never waste the remote GPU: keep ONE task per session, and after each task's outputs are pulled back to local, unload the model, free the VM, and stop the session if nothing else needs it. SCALE HORIZONTALLY (mandatory) - PLAN THEN FAN OUT: give every unit of work its own machine (separate sessions / Kaggle versions) and run them all AT THE SAME TIME, one unit per machine; serial only for dependent steps. On Kaggle, use versions - create the input/weights dataset first, then push several kernel versions; each runs on its own new machine, so run them in parallel. On Kaggle the interactive and version GPU sessions are SEPARATE - after a run, stop the interactive one too (View Active Events). There is no working time limit - prioritise quality - but never leave a session idle.
-7. Quotas are PER ACCOUNT and shared across sessions. Monitor them, and if any backend goes over its limit (Kaggle quota exhausted, Colab not granting a GPU, repeated disconnects), stop retrying and TELL ME so I can switch accounts - then continue on the other backend. The local machine only saves files, runs the controller scripts and collects outputs.
-8. For background/parallel jobs, run a SELF-HEALING WATCHDOG: auto-pull outputs on success, capture logs on failure, re-push ONCE on transient errors, and alert me on stalls or quota limits.
+EXECUTION
+1. Create a project workspace, run ID, manifest and logs before heavy work.
+2. Select one backend based on verified availability, quota, task fit and cost. Kaggle-first is a preference, not a claim that it is always available. Use Colab only when verified and appropriate.
+3. Read only the specialist references needed for the task: model discovery/selection for a concrete model task; visual reconstruction for frame reconstruction; asset extraction for editable assets; 3D generation for 3D; video generation for generated motion; audio/voice for those deliverables; persistence and remote-compute guidance for remote jobs.
+4. Pin model IDs/revisions and record license/source, hardware fit, config, seed when available, job ID and outputs.
+5. Treat remote disks as temporary. Persist inputs/config first; retrieve outputs and logs immediately after completion; validate files and hashes where practical.
+6. Use bounded retries (at most two by default for transient failures). Never retry deterministic errors blindly. Respect quotas; do not launch unbounded parallel jobs.
+7. Stop remote sessions when their work is complete. Never leave idle sessions running.
 
-The skill covers six branches: visual reconstruction; editable asset extraction (SAM 2.1 Large + BiRefNet); 3D asset generation (Hunyuan3D 2.1); audio reconstruction/generation (ACE-Step 1.5, Stable Audio Open 1.5); voice generation &amp; word-level transcription (Qwen3-TTS, Qwen3-ASR + Qwen3-ForcedAligner); and video generation &amp; regeneration (LTX-2.5). Use references/model-selection.md to choose the right expert model for each task, and docs/generation-times.html for local video render-time expectations.
+QUALITY AND DELIVERY
+- Quality &gt; fidelity to source/brief &gt; editability &gt; speed, while staying truthful about capability and licensing.
+- Never claim a job completed because it was submitted. Confirm retrieved artifacts exist, are non-empty, decode, and match expected metadata.
+- For video, verify duration, dimensions, frame rate, codecs, audio streams and synchronization; inspect actual frames and listen when review tools are available.
+- Keep original assets, avoid secrets in logs/commits, and record all outputs and known limitations.
+- Deliver artifacts, logs/manifest, validation results and blockers. State clearly what was not tested.
 
-For every task, research and select the current best specialist model rather than defaulting to one all-rounder (see references/model-discovery.md). Never assume the models named in the skill are still the best.
-
-Begin by reading SKILL.md, then present the plan as todos and start executing.</pre>
+Start with a short capability report and staged plan, then execute only work the environment can actually perform.</pre>
   </div>
 
   <p class="hint">Repo: <a href="https://github.com/adittaya/local-generative-colab-skill">github.com/adittaya/local-generative-colab-skill</a></p>
